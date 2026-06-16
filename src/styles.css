@@ -62,35 +62,47 @@
 }
 
 :root {
-  --radius: 1rem;
-  --background: oklch(0.985 0.003 90);
-  --foreground: oklch(0.25 0.02 240);
+  --radius: 0.75rem;
+  --background: oklch(0.97 0.005 90);
+  --foreground: oklch(0.18 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.02 240);
+  --card-foreground: oklch(0.18 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 240);
-  --primary: oklch(0.68 0.18 22);
+  --popover-foreground: oklch(0.18 0 0);
+  --primary: oklch(0.32 0.06 155);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.78 0.12 190);
-  --secondary-foreground: oklch(0.25 0.02 240);
+  --secondary: oklch(0.78 0.12 80);
+  --secondary-foreground: oklch(0.18 0 0);
   --muted: oklch(0.96 0.005 90);
-  --muted-foreground: oklch(0.5 0.02 240);
-  --accent: oklch(0.9 0.14 95);
-  --accent-foreground: oklch(0.25 0.02 240);
+  --muted-foreground: oklch(0.5 0.01 250);
+  --accent: oklch(0.78 0.12 80);
+  --accent-foreground: oklch(0.18 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.92 0.01 90);
-  --input: oklch(0.92 0.01 90);
-  --ring: oklch(0.68 0.18 22);
+  --border: oklch(0.92 0.008 90);
+  --input: oklch(0.92 0.008 90);
+  --ring: oklch(0.32 0.06 155);
   --success: oklch(0.7 0.15 165);
-  --coral: #FF6B6B;
-  --coral-dark: #E85A5A;
-  --coral-light: #FF8E53;
-  --teal: #4ECDC4;
-  --yellow: #FFE66D;
-  --charcoal: #2D3436;
-  --gray-soft: #636E72;
-  --pink-soft: #FFF5F5;
+  /* Pet Bond BD professional palette */
+  --forest: #1B4332;
+  --forest-dark: #145226;
+  --forest-deep: #0d2818;
+  --forest-soft: #E8F5E9;
+  --gold: #D4A853;
+  --gold-dark: #C49843;
+  --cream: #F8F6F1;
+  --ink: #1A1A1A;
+  --gray-cool: #6B7280;
+  --footer-dark: #111827;
+  /* Legacy tokens kept for unmigrated components */
+  --coral: #1B4332;
+  --coral-dark: #145226;
+  --coral-light: #D4A853;
+  --teal: #1B4332;
+  --yellow: #D4A853;
+  --charcoal: #1A1A1A;
+  --gray-soft: #6B7280;
+  --pink-soft: #F8F6F1;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -105,9 +117,10 @@
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Nunito", "Inter", sans-serif;
-  --font-bn: "Hind Siliguri", "Nunito", sans-serif;
-  --shadow-soft: 0 4px 20px rgba(0,0,0,0.08);
+  --font-display: "Playfair Display", "Cormorant Garamond", serif;
+  --font-bn: "Hind Siliguri", "Inter", sans-serif;
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-card: 0 4px 20px rgba(0,0,0,0.06);
 }
 
 .dark {
