@@ -12,7 +12,7 @@ import {
   flashSale,
 } from "@/lib/shop-data";
 
-export const Route = createFileRoute("/shop")({
+export const Route = createFileRoute("/shop/")({
   head: () => ({
     meta: [
       { title: "Pet Shop — Birds and Pet Animal Clinic" },
