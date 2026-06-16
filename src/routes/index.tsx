@@ -1,19 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Stethoscope,
-  Scissors,
   Heart,
-  Home as HomeIcon,
-  GraduationCap,
-  ShoppingBag,
+  Scissors,
+  AlertCircle,
+  Shield,
+  Leaf,
   ArrowRight,
-  ShieldCheck,
-  Users,
   Star,
-  MessageCircle,
-  Calendar,
-  User,
+  Phone,
+  MapPin,
+  Globe,
+  Clock,
+  Bird,
+  PawPrint,
+  CheckCircle2,
 } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -21,16 +23,21 @@ import { Footer } from "@/components/site/Footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pet Bond BD — Bangladesh's #1 Pet Care Platform" },
+      { title: "Birds and Pet Animal Clinic — BPAC Vet | Dhaka, Bangladesh" },
       {
         name: "description",
         content:
-          "Connect with trusted vets, groomers, and pet lovers across Bangladesh. Veterinary care, grooming, adoption, training and pet shop in one place.",
+          "Expert veterinary care for birds and all pet animals in Bangladesh. Our primary goal is to serve your animals. Visit BPAC Vet.",
       },
-      { property: "og:title", content: "Pet Bond BD — Where Every Pet Finds Their Bond" },
+      { property: "og:title", content: "BPAC Vet — Birds and Pet Animal Clinic" },
       {
         property: "og:description",
-        content: "Bangladesh's premium pet care platform connecting families with verified vets, groomers and the pet community.",
+        content: "Expert veterinary care for birds, exotic pets, dogs and cats in Bangladesh.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1600&q=85",
       },
     ],
   }),
@@ -38,211 +45,158 @@ export const Route = createFileRoute("/")({
 });
 
 const HERO_IMG =
-  "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80";
+  "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1600&q=85";
+const ABOUT_IMG =
+  "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=900&q=80";
 
 const services = [
-  {
-    Icon: Stethoscope,
-    title: "Veterinary Care",
-    desc: "Connect with 500+ certified vets across Bangladesh for checkups, surgery and emergency care.",
-    to: "/services",
-  },
-  {
-    Icon: Scissors,
-    title: "Pet Grooming",
-    desc: "Professional grooming at our salon or in the comfort of your home in Dhaka.",
-    to: "/services",
-  },
-  {
-    Icon: Heart,
-    title: "Adoption",
-    desc: "Give a forever home to pets in need through our verified adoption partners.",
-    to: "/about",
-  },
-  {
-    Icon: HomeIcon,
-    title: "Pet Boarding",
-    desc: "Safe, loving boarding for your pet while you travel. Trusted hosts and 24/7 care.",
-    to: "/services",
-  },
-  {
-    Icon: GraduationCap,
-    title: "Training",
-    desc: "Positive-reinforcement training programs for puppies, adult dogs and cats.",
-    to: "/services",
-  },
-  {
-    Icon: ShoppingBag,
-    title: "Pet Shop",
-    desc: "Premium food, accessories, and supplies delivered across Bangladesh.",
-    to: "/shop",
-  },
+  { Icon: Stethoscope, title: "Bird & Exotic Pet Care", desc: "Specialized treatment for birds, reptiles, and exotic animals." },
+  { Icon: Heart, title: "Dog & Cat Consultation", desc: "Complete health checkups, vaccinations and diagnosis." },
+  { Icon: Scissors, title: "Surgical Procedures", desc: "Safe, skilled surgeries for all pet types." },
+  { Icon: AlertCircle, title: "Emergency Treatment", desc: "24/7 emergency care when your pet needs it most." },
+  { Icon: Shield, title: "Vaccinations & Deworming", desc: "Full vaccination schedules to keep your pet protected." },
+  { Icon: Leaf, title: "Pet Nutrition Advice", desc: "Expert dietary guidance for healthy, happy animals." },
 ];
 
 const stats = [
-  { num: "10,000+", label: "Happy Pets" },
-  { num: "500+", label: "Verified Vets" },
-  { num: "64", label: "Districts" },
-  { num: "4.9★", label: "Average Rating" },
+  { num: "10+ Years", label: "Experience" },
+  { num: "5,000+", label: "Animals Treated" },
+  { num: "Birds & All Pets", label: "Comprehensive Care" },
+  { num: "Experienced", label: "Vet Team" },
 ];
 
 const steps = [
-  { n: "01", title: "Create Profile", desc: "Register your pet or service in minutes." },
-  { n: "02", title: "Connect", desc: "Find vets, groomers, and adopters near you." },
-  { n: "03", title: "Bond", desc: "Build lasting relationships with your pet community." },
+  { n: "01", title: "Call or Walk In", desc: "Contact us or visit our clinic at your convenience." },
+  { n: "02", title: "Vet Consultation", desc: "Our vet examines your pet fully and discusses care." },
+  { n: "03", title: "Treatment & Follow-up", desc: "Receive expert care and recovery guidance." },
 ];
 
 const testimonials = [
   {
-    text: "Pet Bond BD saved my cat Luna's life. The vet diagnosed her perfectly and medicines arrived the same day.",
-    name: "Fatima Khanom",
-    loc: "Gulshan, Dhaka",
-    avatar: "https://i.pravatar.cc/120?img=47",
+    text: "Dr. saheb treated my parrot with such care and expertise. My bird recovered fully. Highly recommended!",
+    name: "Kamal Hossain",
+    role: "Parrot Owner",
+    avatar: "https://i.pravatar.cc/80?img=47",
   },
   {
-    text: "Booked grooming for my Golden Retriever right from home. Professional, on time, and Max came back happy.",
-    name: "Rahim Uddin",
-    loc: "Dhanmondi, Dhaka",
-    avatar: "https://i.pravatar.cc/120?img=12",
+    text: "Best vet clinic I've visited in Dhaka. Professional staff, thorough examination, and fair pricing.",
+    name: "Nusrat Jahan",
+    role: "Cat Owner",
+    avatar: "https://i.pravatar.cc/80?img=33",
   },
   {
-    text: "Adopted my first puppy through Pet Bond BD. The process was thoughtful and the support afterwards was incredible.",
-    name: "Sarah Ahmed",
-    loc: "Chittagong",
-    avatar: "https://i.pravatar.cc/120?img=32",
+    text: "They handled my dog's surgery perfectly. The follow-up care was excellent. BPAC Vet is our family vet forever.",
+    name: "Arif Rahman",
+    role: "Dog Owner",
+    avatar: "https://i.pravatar.cc/80?img=60",
   },
 ];
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-[var(--cream)] pb-20 lg:pb-0">
+    <div className="min-h-screen bg-[var(--bg-clinic)]">
       <Header />
       <main>
         <Hero />
         <Services />
-        <Stats />
-        <HowItWorks />
+        <About />
+        <TrustStrip />
+        <Process />
         <Testimonials />
+        <Contact />
       </main>
       <Footer />
-      <WhatsAppButton />
-      <MobileBottomNav />
     </div>
   );
 }
 
-/* ---------------- HERO ---------------- */
+/* HERO */
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <img
-          src={HERO_IMG}
-          alt="Golden retriever — Pet Bond BD"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30" />
+        <img src={HERO_IMG} alt="Veterinarian caring for a pet" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/[0.52]" />
       </div>
 
-      <div className="mx-auto flex max-w-[1200px] flex-col justify-center px-5 py-24 sm:px-8 sm:py-32 lg:min-h-[640px] lg:py-40">
-        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-white backdrop-blur">
-          Bangladesh's #1 Pet Care Platform
+      <div className="mx-auto flex max-w-[1180px] flex-col px-6 py-24 sm:py-28 lg:min-h-[640px] lg:py-32">
+        <span className="inline-flex w-fit items-center rounded-sm border border-white/25 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur">
+          Trusted Veterinary Care in Bangladesh
         </span>
-        <h1 className="mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.1] text-white sm:text-6xl lg:text-7xl">
-          Where Every Pet<br />Finds Their Bond.
+        <h1 className="mt-6 max-w-3xl font-display text-[44px] font-extrabold leading-[1.08] text-white sm:text-[56px] lg:text-[68px]">
+          Expert Care for<br />Birds &amp; Pet Animals.
         </h1>
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-          Connect with trusted vets, groomers, and pet lovers across Bangladesh.
+        <p className="mt-5 max-w-xl text-lg italic leading-relaxed text-white/90">
+          Our primary goal is to serve your animals.
         </p>
         <div className="mt-9 flex flex-wrap gap-3">
           <Link
-            to="/shop"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[var(--gold)] px-7 text-[15px] font-semibold text-[var(--ink)] transition hover:bg-[var(--gold-dark)]"
+            to="/contact"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[var(--teal)] px-7 text-[15px] font-semibold text-white transition hover:bg-[var(--teal-dark)]"
           >
-            Get Started <ArrowRight className="h-4 w-4" />
+            Book an Appointment <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/services"
-            className="inline-flex h-12 items-center justify-center rounded-md border-2 border-white/80 bg-transparent px-7 text-[15px] font-semibold text-white transition hover:bg-white/10"
+            className="inline-flex h-12 items-center justify-center rounded-md border-2 border-white bg-transparent px-7 text-[15px] font-semibold text-white transition hover:bg-white/10"
           >
-            Explore Services
+            Our Services
           </Link>
         </div>
+      </div>
 
-        <div className="mt-14 grid max-w-2xl grid-cols-1 gap-6 border-t border-white/15 pt-8 text-white sm:grid-cols-3">
-          <TrustItem Icon={ShieldCheck} label="500+ Verified Vets" />
-          <TrustItem Icon={Users} label="10,000+ Happy Pets" />
-          <TrustItem Icon={MessageCircle} label="24/7 Support" />
+      <div className="border-t border-white/10 bg-black/55 backdrop-blur">
+        <div className="mx-auto grid max-w-[1180px] grid-cols-2 gap-4 px-6 py-5 text-sm text-white/95 sm:grid-cols-4">
+          <TrustItem Icon={Bird} label="Birds Specialist" />
+          <TrustItem Icon={PawPrint} label="All Pet Animals" />
+          <TrustItem Icon={Phone} label="Emergency Care" />
+          <TrustItem Icon={CheckCircle2} label="Experienced Vets" />
         </div>
       </div>
     </section>
   );
 }
 
-function TrustItem({ Icon, label }: { Icon: typeof ShieldCheck; label: string }) {
+function TrustItem({ Icon, label }: { Icon: typeof Bird; label: string }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2.5">
       <Icon className="h-5 w-5 text-[var(--gold)]" />
-      <span className="text-sm font-medium text-white/90">{label}</span>
+      <span className="font-medium">{label}</span>
     </div>
   );
 }
 
-/* ---------------- SERVICES ---------------- */
+/* SERVICES */
 function Services() {
   return (
-    <section className="mx-auto max-w-[1200px] px-5 py-24 sm:px-8 sm:py-32">
+    <section className="mx-auto max-w-[1180px] px-6 py-24">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--gold)]">
-          What we offer
-        </p>
-        <h2 className="mt-3 font-display text-4xl font-semibold leading-tight text-[var(--ink)] sm:text-5xl">
-          Comprehensive care for every pet
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--teal)]">What we offer</p>
+        <h2 className="mt-3 font-display text-[34px] font-bold leading-tight text-[var(--ink)] sm:text-[40px]">
+          Our Veterinary Services
         </h2>
-        <p className="mt-4 text-base leading-relaxed text-[var(--gray-cool)] sm:text-lg">
-          From routine checkups to lifelong companionship, every service is delivered by people who treat pets like family.
+        <p className="mt-3 text-base text-[var(--gray-cool)]">
+          Specialized care for birds and all pet animals.
         </p>
       </div>
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((s) => (
-          <Link
+          <div
             key={s.title}
-            to={s.to}
-            className="group flex flex-col rounded-xl bg-white p-7 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]"
+            className="group flex flex-col rounded-[10px] border border-transparent bg-white p-7 shadow-[0_4px_18px_rgba(0,0,0,0.07)] transition-all duration-[250ms] hover:-translate-y-[5px] hover:border-[var(--teal)]"
           >
-            <div className="grid h-14 w-14 place-items-center rounded-full bg-[var(--forest-soft)] text-[var(--forest)]">
+            <div className="grid h-14 w-14 place-items-center rounded-full bg-[var(--teal-tint)] text-[var(--teal)]">
               <s.Icon className="h-6 w-6" strokeWidth={1.75} />
             </div>
-            <h3 className="mt-5 font-display text-xl font-semibold text-[var(--ink)]">
-              {s.title}
-            </h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--gray-cool)]">
-              {s.desc}
-            </p>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--gold)] transition-all group-hover:gap-2.5">
+            <h3 className="mt-5 text-[17px] font-semibold text-[var(--ink)]">{s.title}</h3>
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--gray-cool)]">{s.desc}</p>
+            <Link
+              to="/services"
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--teal)] transition-all group-hover:gap-2.5"
+            >
               Learn More <ArrowRight className="h-4 w-4" />
-            </span>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- STATS ---------------- */
-function Stats() {
-  return (
-    <section className="bg-[var(--forest)] text-white">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-10 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.label} className="text-center sm:text-left">
-            <div className="font-display text-5xl font-bold leading-none text-white sm:text-6xl">
-              {s.num}
-            </div>
-            <p className="mt-3 text-sm font-medium uppercase tracking-[0.12em] text-white/70">
-              {s.label}
-            </p>
+            </Link>
           </div>
         ))}
       </div>
@@ -250,35 +204,81 @@ function Stats() {
   );
 }
 
-/* ---------------- HOW IT WORKS ---------------- */
-function HowItWorks() {
+/* ABOUT */
+function About() {
   return (
-    <section className="mx-auto max-w-[1200px] px-5 py-24 sm:px-8 sm:py-32">
+    <section className="bg-white">
+      <div className="mx-auto grid max-w-[1180px] items-center gap-12 px-6 py-24 lg:grid-cols-2">
+        <div>
+          <img
+            src={ABOUT_IMG}
+            alt="Caring veterinarian with a small pet"
+            className="aspect-[5/4] w-full rounded-[12px] object-cover shadow-[0_10px_30px_rgba(0,0,0,0.12)]"
+          />
+        </div>
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--teal)]">About Us</p>
+          <h2 className="mt-3 font-display text-[34px] font-bold leading-tight text-[var(--ink)] sm:text-[40px]">
+            Dedicated to the Health of Every Animal
+          </h2>
+          <p className="mt-5 text-base leading-[1.75] text-[var(--gray-cool)]">
+            Birds and Pet Animal Clinic (BPAC Vet) provides expert veterinary care for birds, exotic pets, dogs, cats, and all companion animals in Bangladesh. Our experienced veterinary team combines clinical excellence with genuine compassion — because your animal deserves the very best.
+          </p>
+          <blockquote className="mt-6 border-l-4 border-[var(--gold)] bg-[var(--teal-tint)] px-5 py-4 font-display italic text-[var(--ink)]">
+            "Our primary goal is to serve your animals."
+          </blockquote>
+          <Link
+            to="/about"
+            className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--teal)] hover:gap-2.5"
+          >
+            Meet Our Team <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* TRUST STRIP */
+function TrustStrip() {
+  return (
+    <section className="bg-[var(--teal)] text-white">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-2 gap-10 px-6 py-16 lg:grid-cols-4">
+        {stats.map((s) => (
+          <div key={s.label} className="text-center">
+            <div className="font-display text-[26px] font-bold leading-tight text-white sm:text-[30px]">{s.num}</div>
+            <p className="mt-2 text-sm font-medium uppercase tracking-[0.12em] text-white/75">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* PROCESS */
+function Process() {
+  return (
+    <section className="mx-auto max-w-[1180px] px-6 py-24">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--gold)]">
-          How it works
-        </p>
-        <h2 className="mt-3 font-display text-4xl font-semibold text-[var(--ink)] sm:text-5xl">
-          Three steps to a stronger bond
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--teal)]">How it works</p>
+        <h2 className="mt-3 font-display text-[34px] font-bold leading-tight text-[var(--ink)] sm:text-[40px]">
+          Getting Care Is Easy
         </h2>
       </div>
 
-      <div className="relative mt-16 grid gap-12 lg:grid-cols-3 lg:gap-8">
+      <div className="relative mt-14 grid gap-12 lg:grid-cols-3 lg:gap-8">
         <div
           aria-hidden
-          className="absolute left-[16%] right-[16%] top-7 hidden border-t-2 border-dashed border-[var(--gold)]/40 lg:block"
+          className="absolute left-[16%] right-[16%] top-7 hidden border-t-2 border-dashed lg:block"
+          style={{ borderColor: "rgba(200,150,60,0.25)" }}
         />
         {steps.map((s) => (
           <div key={s.n} className="relative flex flex-col items-center text-center">
-            <div className="relative z-10 grid h-14 w-14 place-items-center rounded-full bg-[var(--gold)] font-display text-lg font-bold text-[var(--ink)]">
+            <div className="relative z-10 grid h-14 w-14 place-items-center rounded-full bg-[var(--gold)] font-display text-lg font-bold text-white">
               {s.n}
             </div>
-            <h3 className="mt-6 font-display text-2xl font-semibold text-[var(--ink)]">
-              {s.title}
-            </h3>
-            <p className="mt-3 max-w-xs text-base leading-relaxed text-[var(--gray-cool)]">
-              {s.desc}
-            </p>
+            <h3 className="mt-5 font-display text-[18px] font-bold text-[var(--ink)]">{s.title}</h3>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--gray-cool)]">{s.desc}</p>
           </div>
         ))}
       </div>
@@ -286,44 +286,34 @@ function HowItWorks() {
   );
 }
 
-/* ---------------- TESTIMONIALS ---------------- */
+/* TESTIMONIALS */
 function Testimonials() {
   return (
-    <section className="bg-[var(--cream)]">
-      <div className="mx-auto max-w-[1200px] px-5 py-24 sm:px-8 sm:py-32">
+    <section className="bg-[var(--bg-clinic)]">
+      <div className="mx-auto max-w-[1180px] px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--gold)]">
-            Voices from our community
-          </p>
-          <h2 className="mt-3 font-display text-4xl font-semibold text-[var(--ink)] sm:text-5xl">
-            Loved by pet parents across Bangladesh
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--teal)]">Reviews</p>
+          <h2 className="mt-3 font-display text-[34px] font-bold leading-tight text-[var(--ink)] sm:text-[40px]">
+            What Pet Owners Say
           </h2>
         </div>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {testimonials.map((t) => (
-            <figure
-              key={t.name}
-              className="flex flex-col rounded-xl bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
-            >
+            <figure key={t.name} className="flex flex-col rounded-[10px] bg-white p-7 shadow-[0_4px_18px_rgba(0,0,0,0.07)]">
               <div className="flex gap-1 text-[var(--gold)]">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" strokeWidth={0} />
                 ))}
               </div>
-              <blockquote className="mt-5 flex-1 font-display text-lg italic leading-relaxed text-[var(--ink)]">
+              <blockquote className="mt-4 flex-1 text-[15px] italic leading-relaxed text-[var(--ink)]">
                 "{t.text}"
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  className="h-12 w-12 rounded-full object-cover"
-                  loading="lazy"
-                />
+              <figcaption className="mt-5 flex items-center gap-3">
+                <img src={t.avatar} alt={t.name} className="h-11 w-11 rounded-full object-cover" loading="lazy" />
                 <div>
-                  <div className="font-semibold text-[var(--ink)]">{t.name}</div>
-                  <div className="text-sm text-[var(--gray-cool)]">{t.loc}</div>
+                  <div className="text-sm font-semibold text-[var(--ink)]">{t.name}</div>
+                  <div className="text-xs text-[var(--gray-cool)]">{t.role}</div>
                 </div>
               </figcaption>
             </figure>
@@ -334,57 +324,63 @@ function Testimonials() {
   );
 }
 
-/* ---------------- WHATSAPP FLOATING ---------------- */
-function WhatsAppButton() {
+/* CONTACT */
+function Contact() {
+  const [sent, setSent] = useState(false);
   return (
-    <a
-      href="https://wa.me/8801700000000"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-      className="fixed bottom-24 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 lg:bottom-6"
-    >
-      <MessageCircle className="h-6 w-6" />
-    </a>
-  );
-}
+    <section className="bg-white">
+      <div className="mx-auto grid max-w-[1180px] gap-12 px-6 py-24 lg:grid-cols-2">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--teal)]">Get in touch</p>
+          <h2 className="mt-3 font-display text-[34px] font-bold leading-tight text-[var(--ink)] sm:text-[40px]">
+            Visit or Contact Us
+          </h2>
+          <p className="mt-4 font-semibold text-[var(--ink)]">Birds and Pet Animal Clinic (BPAC Vet)</p>
+          <p className="text-sm italic text-[var(--gray-cool)]">"Our primary goal is to serve your animals."</p>
 
-/* ---------------- MOBILE BOTTOM NAV ---------------- */
-function MobileBottomNav() {
-  const pathname = useRouterPath();
-  const items = [
-    { Icon: HomeIcon, label: "Home", to: "/" as const },
-    { Icon: ShoppingBag, label: "Shop", to: "/shop" as const },
-    { Icon: Calendar, label: "Book", to: "/services" as const },
-    { Icon: User, label: "Profile", to: "/login" as const },
-  ];
-  return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white/95 backdrop-blur lg:hidden">
-      <div className="mx-auto grid max-w-md grid-cols-4">
-        {items.map(({ Icon, label, to }) => {
-          const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
-          return (
-            <Link
-              key={label}
-              to={to}
-              className={`flex h-16 flex-col items-center justify-center gap-1 text-xs font-semibold ${
-                active ? "text-[var(--forest)]" : "text-[var(--gray-cool)]"
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-              {label}
-            </Link>
-          );
-        })}
+          <ul className="mt-7 space-y-4 text-[15px] text-[var(--ink)]">
+            <li className="flex items-start gap-3"><MapPin className="mt-1 h-5 w-5 shrink-0 text-[var(--teal)]" /> Dhaka, Bangladesh</li>
+            <li className="flex items-start gap-3"><Globe className="mt-1 h-5 w-5 shrink-0 text-[var(--teal)]" /> <a href="https://www.bpacvet.com" className="hover:text-[var(--teal)]">www.bpacvet.com</a></li>
+            <li className="flex items-start gap-3"><Phone className="mt-1 h-5 w-5 shrink-0 text-[var(--teal)]" /> <a href="tel:+8801700000000" className="hover:text-[var(--teal)]">+880 1XXX-XXXXXX</a></li>
+            <li className="flex items-start gap-3"><Clock className="mt-1 h-5 w-5 shrink-0 text-[var(--teal)]" /> Sat–Thu: 9 AM – 8 PM <span className="ml-1 text-[var(--gray-cool)]">| Emergency: 24/7</span></li>
+          </ul>
+        </div>
+
+        <form
+          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+          className="space-y-4 rounded-[10px] border border-black/[0.06] bg-[var(--bg-clinic)] p-7"
+        >
+          <Field label="Name">
+            <input required type="text" className="w-full rounded-md border border-black/10 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--teal)]" />
+          </Field>
+          <Field label="Phone Number">
+            <input required type="tel" placeholder="+880 1XXX-XXXXXX" className="w-full rounded-md border border-black/10 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--teal)]" />
+          </Field>
+          <Field label="Pet Type">
+            <select className="w-full rounded-md border border-black/10 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--teal)]">
+              <option>Bird</option><option>Dog</option><option>Cat</option><option>Other</option>
+            </select>
+          </Field>
+          <Field label="Message">
+            <textarea required rows={4} className="w-full rounded-md border border-black/10 bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--teal)]" />
+          </Field>
+          <button
+            type="submit"
+            className="inline-flex h-11 w-full items-center justify-center rounded-md bg-[var(--teal)] px-5 text-sm font-semibold text-white transition hover:bg-[var(--teal-dark)] sm:w-auto"
+          >
+            {sent ? "Message Sent ✓" : "Send Message"}
+          </button>
+        </form>
       </div>
-    </nav>
+    </section>
   );
 }
 
-function useRouterPath() {
-  const [path, setPath] = useState("/");
-  useEffect(() => {
-    setPath(window.location.pathname);
-  }, []);
-  return path;
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-sm font-semibold text-[var(--ink)]">{label}</span>
+      {children}
+    </label>
+  );
 }
