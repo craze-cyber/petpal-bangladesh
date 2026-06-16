@@ -83,26 +83,30 @@
   --input: oklch(0.92 0.008 90);
   --ring: oklch(0.32 0.06 155);
   --success: oklch(0.7 0.15 165);
-  /* Pet Bond BD professional palette */
-  --forest: #1B4332;
-  --forest-dark: #145226;
-  --forest-deep: #0d2818;
-  --forest-soft: #E8F5E9;
-  --gold: #D4A853;
-  --gold-dark: #C49843;
-  --cream: #F8F6F1;
+  /* BPAC Vet — medical/veterinary palette */
+  --teal: #0B6E6E;
+  --teal-dark: #084F4F;
+  --teal-tint: #E6F3F3;
+  --gold: #C8963C;
+  --gold-dark: #A87A2A;
+  --bg-clinic: #F5F7F8;
   --ink: #1A1A1A;
-  --gray-cool: #6B7280;
-  --footer-dark: #111827;
-  /* Legacy tokens kept for unmigrated components */
-  --coral: #1B4332;
-  --coral-dark: #145226;
-  --coral-light: #D4A853;
-  --teal: #1B4332;
-  --yellow: #D4A853;
+  --gray-cool: #5A6472;
+  --emergency: #C0392B;
+  --footer-dark: #084F4F;
+  /* Aliases — legacy tokens map to new palette */
+  --forest: #0B6E6E;
+  --forest-dark: #084F4F;
+  --forest-deep: #063939;
+  --forest-soft: #E6F3F3;
+  --cream: #F5F7F8;
+  --coral: #0B6E6E;
+  --coral-dark: #084F4F;
+  --coral-light: #C8963C;
+  --yellow: #C8963C;
   --charcoal: #1A1A1A;
-  --gray-soft: #6B7280;
-  --pink-soft: #F8F6F1;
+  --gray-soft: #5A6472;
+  --pink-soft: #F5F7F8;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -117,10 +121,10 @@
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Playfair Display", "Cormorant Garamond", serif;
+  --font-display: "Merriweather", "Georgia", serif;
   --font-bn: "Hind Siliguri", "Inter", sans-serif;
-  --shadow-soft: 0 4px 20px rgba(0,0,0,0.06);
-  --shadow-card: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-soft: 0 4px 18px rgba(0,0,0,0.07);
+  --shadow-card: 0 4px 18px rgba(0,0,0,0.07);
 }
 
 .dark {
