@@ -64,7 +64,7 @@ const sampleComments = [
 ];
 
 function BlogDetail() {
-  const { post } = Route.useLoaderData();
+  const { post } = Route.useLoaderData() as { post: BlogPost };
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   const headings = useMemo(
