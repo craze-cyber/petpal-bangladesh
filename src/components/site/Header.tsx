@@ -16,6 +16,7 @@ const navLinks = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { count } = useCart();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
