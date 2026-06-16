@@ -27,7 +27,7 @@ export function Header() {
 
         <nav className="ml-6 hidden flex-1 items-center gap-1 lg:flex">
           {navLinks.map((l) => {
-            const isActive = l.label === active;
+            const isActive = l.to === "/" ? pathname === "/" : pathname.startsWith(l.to);
             return (
               <Link
                 key={l.label}
