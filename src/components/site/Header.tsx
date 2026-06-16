@@ -1,20 +1,19 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Search, ShoppingCart, Bell, Menu, X, User } from "lucide-react";
 import logo from "@/assets/bpac-logo.png.asset.json";
 
 const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Shop", to: "/" },
-  { label: "Clinic", to: "/" },
-  { label: "Lab", to: "/" },
-  { label: "Grooming", to: "/" },
-  { label: "Blog", to: "/" },
+  { label: "Home", to: "/" as const },
+  { label: "Services", to: "/services" as const },
+  { label: "Blog", to: "/blog" as const },
+  { label: "About", to: "/about" as const },
+  { label: "Contact", to: "/contact" as const },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [active] = useState("Home");
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
