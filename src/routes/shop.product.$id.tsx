@@ -9,11 +9,6 @@ import { useCart } from "@/lib/cart";
 import { ProductCard } from "@/components/shop/ProductCard";
 
 export const Route = createFileRoute("/shop/product/$id")({
-  loader: ({ params }) => {
-    const product = getProduct(params.id);
-    if (!product) throw notFound();
-    return { product };
-  },
   component: ProductPage,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
@@ -34,13 +29,29 @@ const REVIEWS = [
 ];
 
 function ProductPage() {
-  const { product } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const product = getProduct(id);
   const { add } = useCart();
   const [activeImg, setActiveImg] = useState(0);
-  const [variant, setVariant] = useState(product.variants?.[0]?.value);
+  const [variant, setVariant] = useState(product?.variants?.[0]?.value);
   const [qty, setQty] = useState(1);
   const [showReview, setShowReview] = useState(false);
   const [zoom, setZoom] = useState(false);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="mx-auto max-w-3xl px-4 py-24 text-center">
+          <h1 className="font-display text-3xl font-bold">Product not found</h1>
+          <Link to="/shop" className="mt-4 inline-block text-[color:var(--coral)] hover:underline">← Back to Shop</Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+
 
   const activeVariant = product.variants?.find((v) => v.value === variant);
   const price = activeVariant?.price ?? product.price;
