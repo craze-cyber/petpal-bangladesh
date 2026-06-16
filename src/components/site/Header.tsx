@@ -52,7 +52,14 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-1 sm:gap-2">
           <IconBtn label="Search"><Search className="h-5 w-5" /></IconBtn>
-          <IconBtn label="Cart" badge="3"><ShoppingCart className="h-5 w-5" /></IconBtn>
+          <Link to="/cart" aria-label="Cart" className="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-[color:var(--charcoal)] transition hover:bg-[color:var(--pink-soft)] hover:text-[color:var(--coral)]">
+            <ShoppingCart className="h-5 w-5" />
+            {count > 0 && (
+              <span className="absolute right-1.5 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[color:var(--coral)] px-1 text-[10px] font-bold leading-none text-white">
+                {count}
+              </span>
+            )}
+          </Link>
           <IconBtn label="Notifications" badge="2"><Bell className="h-5 w-5" /></IconBtn>
           <Link
             to="/login"
