@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Search, ShoppingCart, Bell, Menu, X, User } from "lucide-react";
 import logo from "@/assets/bpac-logo.png.asset.json";
+import { useCart } from "@/lib/cart";
 
 const navLinks = [
   { label: "Home", to: "/" as const },
+  { label: "Shop", to: "/shop" as const },
   { label: "Services", to: "/services" as const },
   { label: "Blog", to: "/blog" as const },
   { label: "About", to: "/about" as const },
@@ -14,6 +16,7 @@ const navLinks = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { count } = useCart();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
@@ -49,7 +52,14 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-1 sm:gap-2">
           <IconBtn label="Search"><Search className="h-5 w-5" /></IconBtn>
-          <IconBtn label="Cart" badge="3"><ShoppingCart className="h-5 w-5" /></IconBtn>
+          <Link to="/cart" aria-label="Cart" className="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-[color:var(--charcoal)] transition hover:bg-[color:var(--pink-soft)] hover:text-[color:var(--coral)]">
+            <ShoppingCart className="h-5 w-5" />
+            {count > 0 && (
+              <span className="absolute right-1.5 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[color:var(--coral)] px-1 text-[10px] font-bold leading-none text-white">
+                {count}
+              </span>
+            )}
+          </Link>
           <IconBtn label="Notifications" badge="2"><Bell className="h-5 w-5" /></IconBtn>
           <Link
             to="/login"
