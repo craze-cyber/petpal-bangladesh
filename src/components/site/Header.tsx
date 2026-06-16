@@ -52,12 +52,12 @@ export function Header() {
           <IconBtn label="Search"><Search className="h-5 w-5" /></IconBtn>
           <IconBtn label="Cart" badge="3"><ShoppingCart className="h-5 w-5" /></IconBtn>
           <IconBtn label="Notifications" badge="2"><Bell className="h-5 w-5" /></IconBtn>
-          <button
-            type="button"
+          <Link
+            to="/login"
             className="hidden h-10 items-center gap-2 rounded-full bg-[color:var(--coral)] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--coral-dark)] sm:inline-flex"
           >
             <User className="h-4 w-4" /> Login
-          </button>
+          </Link>
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -96,9 +96,13 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
-            <button className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[color:var(--coral)] px-4 text-base font-semibold text-white">
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[color:var(--coral)] px-4 text-base font-semibold text-white"
+            >
               <User className="h-5 w-5" /> Login / Sign up
-            </button>
+            </Link>
           </nav>
         </div>
       )}
