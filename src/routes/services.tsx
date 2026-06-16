@@ -31,7 +31,7 @@ export const Route = createFileRoute("/services")({
 
 type Module = {
   id: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   name: string;
   bnName: string;
   tint: string;
