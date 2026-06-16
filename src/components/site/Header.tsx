@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Search, ShoppingCart, Bell, Menu, X, User } from "lucide-react";
 import logo from "@/assets/bpac-logo.png.asset.json";
+import { useCart } from "@/lib/cart";
 
 const navLinks = [
   { label: "Home", to: "/" as const },
+  { label: "Shop", to: "/shop" as const },
   { label: "Services", to: "/services" as const },
   { label: "Blog", to: "/blog" as const },
   { label: "About", to: "/about" as const },
