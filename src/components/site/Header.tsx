@@ -96,9 +96,13 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
-            <button className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[color:var(--coral)] px-4 text-base font-semibold text-white">
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="mt-4 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[color:var(--coral)] px-4 text-base font-semibold text-white"
+            >
               <User className="h-5 w-5" /> Login / Sign up
-            </button>
+            </Link>
           </nav>
         </div>
       )}
