@@ -21,6 +21,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
+import { Route as OrderConfirmationIdRouteImport } from './routes/order-confirmation.$id'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ShopProductIdRouteImport } from './routes/shop.product.$id'
 import { Route as ShopCategorySlugRouteImport } from './routes/shop.category.$slug'
@@ -85,6 +86,11 @@ const ShopIndexRoute = ShopIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ShopRoute,
 } as any)
+const OrderConfirmationIdRoute = OrderConfirmationIdRouteImport.update({
+  id: '/order-confirmation/$id',
+  path: '/order-confirmation/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
+  '/order-confirmation/$id': typeof OrderConfirmationIdRoute
   '/shop/': typeof ShopIndexRoute
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/shop/product/$id': typeof ShopProductIdRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/order-confirmation/$id': typeof OrderConfirmationIdRoute
   '/shop': typeof ShopIndexRoute
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/shop/product/$id': typeof ShopProductIdRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
+  '/order-confirmation/$id': typeof OrderConfirmationIdRoute
   '/shop/': typeof ShopIndexRoute
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/shop/product/$id': typeof ShopProductIdRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/blog/$slug'
+    | '/order-confirmation/$id'
     | '/shop/'
     | '/shop/category/$slug'
     | '/shop/product/$id'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/services'
     | '/blog/$slug'
+    | '/order-confirmation/$id'
     | '/shop'
     | '/shop/category/$slug'
     | '/shop/product/$id'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/blog/$slug'
+    | '/order-confirmation/$id'
     | '/shop/'
     | '/shop/category/$slug'
     | '/shop/product/$id'
@@ -217,6 +229,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   ServicesRoute: typeof ServicesRoute
   ShopRoute: typeof ShopRouteWithChildren
+  OrderConfirmationIdRoute: typeof OrderConfirmationIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopIndexRouteImport
       parentRoute: typeof ShopRoute
     }
+    '/order-confirmation/$id': {
+      id: '/order-confirmation/$id'
+      path: '/order-confirmation/$id'
+      fullPath: '/order-confirmation/$id'
+      preLoaderRoute: typeof OrderConfirmationIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   ServicesRoute: ServicesRoute,
   ShopRoute: ShopRouteWithChildren,
+  OrderConfirmationIdRoute: OrderConfirmationIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
