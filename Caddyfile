@@ -1,0 +1,5 @@
+# Caddy = automatic HTTPS via Let's Encrypt. Replace bpacvet.com with your domain.
+bpacvet.com, www.bpacvet.com {
+    encode zstd gzip
+    reverse_proxy app:3000
+}
