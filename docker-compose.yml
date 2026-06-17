@@ -41,6 +41,24 @@ services:
     depends_on:
       - app
 
+  webhook:
+    build:
+      context: .
+      dockerfile: Dockerfile.webhook
+    image: bpac-webhook:latest
+    container_name: bpac_webhook
+    restart: unless-stopped
+    environment:
+      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET}
+      REPO_DIR: /repo
+      WEBHOOK_PORT: 9000
+      WEBHOOK_BRANCH: refs/heads/main
+    ports:
+      - "9000:9000"
+    volumes:
+      - /opt/bpac:/repo
+      - /var/run/docker.sock:/var/run/docker.sock
+
 volumes:
   caddy_data:
   caddy_config:
