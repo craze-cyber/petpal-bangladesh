@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, Mail, MessageCircle, MapPin, Clock, Send } from "lucide-react";
+import { MapPin, Globe, Phone, Mail, Clock } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FadeUp } from "@/components/site/Motion";
@@ -8,310 +8,257 @@ import { FadeUp } from "@/components/site/Motion";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Birds and Pet Animal Clinic" },
+      { title: "Contact — BPAC Vet | Birds and Pet Animal Clinic" },
       {
         name: "description",
         content:
-          "Visit our Dhanmondi clinic, call, email or WhatsApp the BPAC team. 24/7 pet emergency line available.",
+          "Visit or contact Birds and Pet Animal Clinic (BPAC Vet) in Dhaka. Call +880 1700-000000 or email info@bpacvet.com.",
       },
-      { property: "og:title", content: "Contact BPAC" },
+      { property: "og:title", content: "Contact BPAC Vet" },
       {
         property: "og:description",
-        content: "Reach the BPAC team in Dhanmondi — clinic visits, partnerships, careers and emergencies.",
+        content: "Our primary goal is to serve your animals. Reach BPAC Vet in Dhaka, Bangladesh.",
       },
     ],
   }),
   component: ContactPage,
 });
 
-type Form = {
-  name: string;
-  email: string;
-  phone: string;
-  subject: string;
-  message: string;
-};
-
 function ContactPage() {
-  const [form, setForm] = useState<Form>({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "General",
-    message: "",
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [sent, setSent] = useState(false);
-
-  const update = (k: keyof Form, v: string) => setForm((s) => ({ ...s, [k]: v }));
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 900));
-    setSubmitting(false);
-    setSent(true);
-    setForm({ name: "", email: "", phone: "", subject: "General", message: "" });
-    setTimeout(() => setSent(false), 4000);
-  };
-
   return (
-    <div className="min-h-screen bg-[color:var(--background)] text-[color:var(--charcoal)]">
+    <div className="min-h-screen bg-[color:var(--bg-clinic)] text-[color:var(--charcoal)]">
       <Header />
 
-      <section className="bg-gradient-to-br from-[color:var(--pink-soft)] to-white py-14">
+      <section className="bg-gradient-to-br from-[color:var(--teal)] to-[color:var(--teal-dark)] py-16 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <FadeUp>
-            <h1 className="font-display text-4xl font-extrabold sm:text-5xl">Get in touch</h1>
-            <p className="mt-3 text-[color:var(--gray-soft)]">
-              We'd love to hear from you. Visit, call, or message — we typically reply within
-              an hour.
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--gold)]">Get in touch</p>
+            <h1 className="mt-3 font-display text-4xl font-extrabold sm:text-5xl">
+              Visit or Contact BPAC Vet
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-white/85 italic">
+              "Our primary goal is to serve your animals."
             </p>
           </FadeUp>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-3">
-          <ContactCard
-            icon={Phone}
-            label="Call us"
-            tint="var(--coral)"
-            primary="+880 1700-000000"
-            href="tel:+8801700000000"
-            note="Sat–Thu, 9 AM – 9 PM"
-          />
-          <ContactCard
-            icon={Mail}
-            label="Email us"
-            tint="var(--teal)"
-            primary="hello@bpacvet.com"
-            href="mailto:hello@bpacvet.com"
-            note="Replies within 1 hour"
-          />
-          <ContactCard
-            icon={MessageCircle}
-            label="WhatsApp"
-            tint="#25d366"
-            primary="+880 1700-000000"
-            href="https://wa.me/8801700000000"
-            note="24/7 chat support"
-          />
-        </div>
-      </section>
+      <main className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="grid gap-10 md:grid-cols-2">
+          {/* LEFT — INFO */}
+          <FadeUp>
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-display text-2xl font-extrabold">
+                  Birds and Pet Animal Clinic (BPAC Vet)
+                </h2>
+                <p className="mt-2 text-[color:var(--gray-soft)]">
+                  Bangladesh's trusted veterinary care platform — clinic, shop, lab and grooming.
+                </p>
+              </div>
 
-      {/* Map + form */}
-      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div className="order-1 lg:order-2">
-            <div className="overflow-hidden rounded-3xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-              <iframe
-                title="BPAC Dhanmondi"
-                src="https://www.google.com/maps?q=Dhanmondi%2C%20Road%205%2C%20Dhaka&output=embed"
-                width="100%"
-                height="380"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="block w-full"
-              />
-              <div className="flex items-start gap-3 p-5">
-                <MapPin className="mt-1 h-5 w-5 text-[color:var(--coral)]" />
-                <div>
-                  <p className="font-display text-base font-extrabold">Birds and Pet Animal Clinic</p>
-                  <p className="text-sm text-[color:var(--gray-soft)]">
-                    House 12, Road 5, Dhanmondi, Dhaka 1205
-                  </p>
-                </div>
+              <ul className="space-y-3">
+                <InfoRow icon={MapPin} label="Dhaka, Bangladesh" />
+                <InfoRow
+                  icon={Globe}
+                  label="www.bpacvet.com"
+                  href="https://www.bpacvet.com"
+                />
+                <InfoRow
+                  icon={Phone}
+                  label="+880 1700-000000"
+                  href="tel:+8801700000000"
+                />
+                <InfoRow
+                  icon={Mail}
+                  label="info@bpacvet.com"
+                  href="mailto:info@bpacvet.com"
+                />
+                <InfoRow icon={Clock} label="Sat – Thu: 9 AM – 8 PM · Emergency: 24/7" />
+              </ul>
+
+              <div className="overflow-hidden rounded-2xl border border-black/5 shadow-sm">
+                <iframe
+                  title="BPAC Vet location in Dhaka"
+                  src="https://www.google.com/maps?q=Dhaka,Bangladesh&output=embed"
+                  loading="lazy"
+                  className="h-72 w-full border-0"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
             </div>
+          </FadeUp>
 
-            <div className="mt-8 rounded-3xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-[color:var(--teal)]" />
-                <h3 className="font-display text-lg font-extrabold">Business hours</h3>
-              </div>
-              <table className="mt-4 w-full text-sm">
-                <tbody>
-                  <tr className="border-b border-[color:var(--pink-soft)]">
-                    <td className="py-2.5 font-semibold">Saturday – Thursday</td>
-                    <td className="py-2.5 text-right text-[color:var(--gray-soft)]">9:00 AM – 9:00 PM</td>
-                  </tr>
-                  <tr className="border-b border-[color:var(--pink-soft)]">
-                    <td className="py-2.5 font-semibold">Friday</td>
-                    <td className="py-2.5 text-right text-[color:var(--gray-soft)]">2:00 PM – 9:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 font-semibold text-[color:var(--coral)]">Emergency line</td>
-                    <td className="py-2.5 text-right font-semibold text-[color:var(--coral)]">24/7</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <form
-            onSubmit={onSubmit}
-            className="order-2 rounded-3xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.06)] sm:p-8 lg:order-1"
-          >
-            <h3 className="font-display text-2xl font-extrabold">Send us a message</h3>
-            <p className="mt-1 text-sm text-[color:var(--gray-soft)]">
-              Fill out the form and we'll respond shortly.
-            </p>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <Field label="Full name">
-                <input
-                  required
-                  value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
-                  className="input"
-                  placeholder="পূর্ণ নাম"
-                />
-              </Field>
-              <Field label="Email">
-                <input
-                  required
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => update("email", e.target.value)}
-                  className="input"
-                  placeholder="you@example.com"
-                />
-              </Field>
-              <Field label="Phone">
-                <div className="flex">
-                  <span className="inline-flex items-center rounded-l-2xl border border-r-0 border-[color:var(--border)] bg-[color:var(--pink-soft)] px-3 text-sm font-semibold">
-                    +880
-                  </span>
-                  <input
-                    required
-                    inputMode="numeric"
-                    pattern="01[0-9]{9}"
-                    maxLength={11}
-                    value={form.phone}
-                    onChange={(e) => update("phone", e.target.value.replace(/\D/g, ""))}
-                    className="input !rounded-l-none"
-                    placeholder="01XXXXXXXXX"
-                  />
-                </div>
-              </Field>
-              <Field label="Subject">
-                <select
-                  value={form.subject}
-                  onChange={(e) => update("subject", e.target.value)}
-                  className="input"
-                >
-                  <option>General</option>
-                  <option>Complaint</option>
-                  <option>Partnership</option>
-                  <option>Career</option>
-                  <option>Emergency</option>
-                </select>
-              </Field>
-            </div>
-
-            <Field label="Message" className="mt-4">
-              <textarea
-                required
-                rows={5}
-                value={form.message}
-                onChange={(e) => update("message", e.target.value)}
-                className="input resize-none"
-                placeholder="How can we help?"
-              />
-            </Field>
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[color:var(--coral)] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[color:var(--coral-dark)] disabled:opacity-60 sm:w-auto"
-            >
-              {submitting ? (
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/60 border-t-white" />
-              ) : (
-                <>
-                  <Send className="h-4 w-4" /> Send message
-                </>
-              )}
-            </button>
-
-            {sent && (
-              <p className="mt-4 rounded-2xl bg-[color:var(--teal)]/15 px-4 py-3 text-sm font-semibold text-[color:var(--teal)]">
-                Message sent — we'll be in touch soon!
-              </p>
-            )}
-          </form>
+          {/* RIGHT — FORM */}
+          <FadeUp delay={0.05}>
+            <ContactForm />
+          </FadeUp>
         </div>
-      </section>
+      </main>
 
       <Footer />
-
-      <style>{`
-        .input {
-          width: 100%;
-          border-radius: 1rem;
-          border: 1px solid var(--border);
-          background: var(--background);
-          padding: 0.75rem 1rem;
-          font-size: 0.9rem;
-          color: var(--charcoal);
-          transition: border-color .15s, box-shadow .15s;
-        }
-        .input:focus { outline: none; border-color: var(--coral); box-shadow: 0 0 0 4px rgba(255,107,107,0.12); }
-      `}</style>
     </div>
   );
 }
 
-function ContactCard({
+function InfoRow({
   icon: Icon,
   label,
-  primary,
   href,
-  note,
-  tint,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
-  primary: string;
-  href: string;
-  note: string;
-  tint: string;
+  href?: string;
 }) {
-  return (
-    <a
-      href={href}
-      className="group block rounded-3xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]"
-    >
-      <div
-        className="grid h-12 w-12 place-items-center rounded-2xl text-white"
-        style={{ backgroundColor: tint }}
-      >
-        <Icon className="h-6 w-6" />
-      </div>
-      <p className="mt-4 text-xs font-bold uppercase tracking-wider text-[color:var(--gray-soft)]">
-        {label}
-      </p>
-      <p className="mt-1 font-display text-lg font-extrabold group-hover:text-[color:var(--coral)]">
-        {primary}
-      </p>
-      <p className="text-xs text-[color:var(--gray-soft)]">{note}</p>
+  const inner = (
+    <li className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition hover:shadow-md">
+      <span className="grid h-10 w-10 place-items-center rounded-full bg-[color:var(--teal-tint)] text-[color:var(--teal)]">
+        <Icon className="h-5 w-5" />
+      </span>
+      <span className="text-sm font-semibold">{label}</span>
+    </li>
+  );
+  return href ? (
+    <a href={href} className="block">
+      {inner}
     </a>
+  ) : (
+    inner
   );
 }
 
-function Field({
-  label,
-  children,
-  className,
-}: {
-  label: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+function ContactForm() {
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "General Enquiry",
+    petType: "Bird",
+    message: "",
+  });
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setSent(true);
+    setTimeout(() => setSent(false), 4000);
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "General Enquiry",
+      petType: "Bird",
+      message: "",
+    });
+  }
+
   return (
-    <label className={`block ${className ?? ""}`}>
-      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[color:var(--gray-soft)]">
+    <form
+      onSubmit={submit}
+      className="space-y-4 rounded-3xl bg-white p-6 shadow-[0_10px_40px_rgba(11,110,110,0.08)] sm:p-8"
+    >
+      <h2 className="font-display text-2xl font-extrabold">Send us a message</h2>
+      <p className="text-sm text-[color:var(--gray-soft)]">
+        We typically reply within a few hours during clinic hours.
+      </p>
+
+      <Field label="Full Name">
+        <input
+          required
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className={inputCls}
+        />
+      </Field>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Email">
+          <input
+            type="email"
+            required
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            className={inputCls}
+          />
+        </Field>
+        <Field label="Phone (+880)">
+          <div className="flex h-11 overflow-hidden rounded-lg border border-black/10">
+            <span className="grid place-items-center bg-[color:var(--bg-clinic)] px-3 text-sm font-bold text-[color:var(--teal-dark)]">
+              +880
+            </span>
+            <input
+              type="tel"
+              inputMode="numeric"
+              placeholder="1XXXXXXXXX"
+              required
+              value={form.phone}
+              onChange={(e) =>
+                setForm({ ...form, phone: e.target.value.replace(/\D/g, "").slice(0, 11) })
+              }
+              className="flex-1 px-3 text-sm outline-none"
+            />
+          </div>
+        </Field>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Subject">
+          <select
+            value={form.subject}
+            onChange={(e) => setForm({ ...form, subject: e.target.value })}
+            className={inputCls}
+          >
+            {["General Enquiry", "Appointment", "Emergency", "Partnership", "Complaint"].map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+        </Field>
+        <Field label="Pet Type">
+          <select
+            value={form.petType}
+            onChange={(e) => setForm({ ...form, petType: e.target.value })}
+            className={inputCls}
+          >
+            {["Bird", "Dog", "Cat", "Rabbit", "Other"].map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+        </Field>
+      </div>
+
+      <Field label="Message">
+        <textarea
+          required
+          rows={5}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          className={`${inputCls} h-auto py-3`}
+        />
+      </Field>
+
+      <button
+        type="submit"
+        className="h-12 w-full rounded-lg bg-[color:var(--teal)] text-sm font-bold text-white shadow transition hover:bg-[color:var(--teal-dark)]"
+      >
+        Send Message
+      </button>
+
+      {sent && (
+        <p className="rounded-lg bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-700">
+          ✓ Message sent. We'll get back to you shortly.
+        </p>
+      )}
+    </form>
+  );
+}
+
+const inputCls =
+  "h-11 w-full rounded-lg border border-black/10 bg-white px-3 text-sm outline-none transition focus:border-[color:var(--teal)] focus:ring-2 focus:ring-[color:var(--teal)]/20";
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-[color:var(--charcoal)]/70">
         {label}
       </span>
       {children}
