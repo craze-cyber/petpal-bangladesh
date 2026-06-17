@@ -386,7 +386,7 @@ function StepPet({ owner }: { owner: Step1 }) {
   const navigate = useNavigate();
   const [pet, setPet] = useState({
     name: "",
-    species: "Dog",
+    species: "Bird",
     breed: "",
     dob: "",
     gender: "Male" as "Male" | "Female",
