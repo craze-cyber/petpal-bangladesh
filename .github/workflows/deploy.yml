@@ -1,4 +1,16 @@
-name: Deploy to Hostinger
+name: Deploy to Hostinger VPS
+
+# Auto-deploys on every push to main.
+# Required GitHub Secrets (Repo → Settings → Secrets and variables → Actions):
+#   VPS_HOST                       e.g. 123.45.67.89  (your Hostinger VPS IP)
+#   VPS_USER                       usually  root
+#   VPS_SSH_KEY                    private SSH key (full PEM contents)
+#   VPS_PORT                       usually  22
+#   VITE_SUPABASE_URL              https://xxxx.supabase.co
+#   VITE_SUPABASE_PUBLISHABLE_KEY  your anon/publishable key
+#   SUPABASE_URL                   same as above (server copy)
+#   SUPABASE_PUBLISHABLE_KEY       same as above (server copy)
+#   SUPABASE_SERVICE_ROLE_KEY      service role key (server only)
 
 on:
   push:
@@ -6,7 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,39 +28,62 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
-      - name: Build static public_html/
-        run: bun run build:hostinger
+      - name: Build TanStack Start (SSR bundle)
         env:
-          HOSTINGER_TARGET_URL: https://pet-bond-bd.lovable.app
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: bun run build
 
-      # Option A – FTP upload (recommended for shared hosting / hPanel).
-      # Add these repo secrets in GitHub → Settings → Secrets and variables → Actions:
-      #   FTP_SERVER         e.g. ftp.bpacvet.com
-      #   FTP_USERNAME       your hPanel FTP user
-      #   FTP_PASSWORD       your hPanel FTP password
-      - name: Deploy via FTP
-        if: ${{ secrets.FTP_SERVER != '' }}
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Create deployment bundle
+        run: |
+          tar -czf deploy.tar.gz \
+            .output \
+            package.json \
+            bun.lockb \
+            ecosystem.config.cjs
+
+      - name: Copy bundle to VPS
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./public_html/
-          server-dir: /public_html/
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "deploy.tar.gz"
+          target: "/var/www/bpacvet/"
 
-      # Option B – SSH/rsync (use this instead of Option A for VPS).
-      # Add repo secrets: SSH_HOST, SSH_USER, SSH_PRIVATE_KEY, SSH_TARGET_DIR
-      # then uncomment the steps below and delete the FTP step above.
-      #
-      # - name: Configure SSH
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
-      # - name: rsync to VPS
-      #   run: |
-      #     rsync -avz --delete ./public_html/ \
-      #       ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET_DIR }}
+      - name: Extract & restart on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          envs: VITE_SUPABASE_URL,VITE_SUPABASE_PUBLISHABLE_KEY,SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,SUPABASE_SERVICE_ROLE_KEY
+          script: |
+            set -e
+            cd /var/www/bpacvet
+            tar -xzf deploy.tar.gz
+            rm deploy.tar.gz
+
+            # Write server env file (PM2 reads this on restart)
+            cat > .env <<EOF
+            NODE_ENV=production
+            PORT=3000
+            VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
+            VITE_SUPABASE_PUBLISHABLE_KEY=${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+            SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+            SUPABASE_PUBLISHABLE_KEY=${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+            SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+            EOF
+            chmod 600 .env
+
+            # Install prod deps (server bundle needs them at runtime)
+            export PATH="$HOME/.bun/bin:$PATH"
+            bun install --production
+
+            # (Re)start with PM2
+            pm2 startOrReload ecosystem.config.cjs --update-env
+            pm2 save
