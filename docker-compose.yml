@@ -1,18 +1,7 @@
-# Paste this into Hostinger → Docker Manager → Compose a project → .yaml editor
-# Project name: bpac_vet_clinic
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
-        VITE_SUPABASE_PUBLISHABLE_KEY: ${VITE_SUPABASE_PUBLISHABLE_KEY}
-    image: bpac-vet-clinic:latest
-    container_name: bpac_app
+    image: YOUR_PUBLIC_IMAGE:latest
     restart: unless-stopped
-    ports:
-      - "3000:3000"
     environment:
       NODE_ENV: production
       PORT: 3000
@@ -21,44 +10,12 @@ services:
       SUPABASE_URL: ${SUPABASE_URL}
       SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY}
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3000/"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
 
   caddy:
     image: caddy:2-alpine
-    container_name: bpac_caddy
     restart: unless-stopped
     ports:
       - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
+    command: caddy reverse-proxy --from :80 --to app:3000
     depends_on:
       - app
-
-  webhook:
-    build:
-      context: .
-      dockerfile: Dockerfile.webhook
-    image: bpac-webhook:latest
-    container_name: bpac_webhook
-    restart: unless-stopped
-    environment:
-      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET}
-      REPO_DIR: /repo
-      WEBHOOK_PORT: 9000
-      WEBHOOK_BRANCH: refs/heads/main
-    ports:
-      - "9000:9000"
-    volumes:
-      - /opt/bpac:/repo
-      - /var/run/docker.sock:/var/run/docker.sock
-
-volumes:
-  caddy_data:
-  caddy_config:
