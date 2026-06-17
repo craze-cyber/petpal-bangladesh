@@ -159,7 +159,7 @@ function BlogList() {
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
-                  <span className="inline-block w-fit rounded-full bg-[color:var(--coral)]/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-[color:var(--coral)]">
+                  <span className="inline-block w-fit rounded-full bg-[color:var(--gold)] px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white">
                     {p.category}
                   </span>
                   <h3 className="mt-3 line-clamp-2 font-display text-lg font-extrabold leading-snug">
