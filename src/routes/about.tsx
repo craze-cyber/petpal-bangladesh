@@ -212,23 +212,27 @@ function AboutPage() {
       {/* STATS */}
       <section className="bg-[color:var(--teal-dark)] py-20 text-white" ref={statsRef}>
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
-          {stats.map((s) => {
-            const v = useCountUp(s.value, s.decimals ?? 0, inView);
-            return (
-              <div key={s.label} className="text-center">
-                <div className="text-4xl">{s.icon}</div>
-                <div className="mt-3 font-display text-4xl font-extrabold text-[color:var(--gold)] sm:text-5xl">
-                  {v}
-                  {s.suffix}
-                </div>
-                <p className="mt-2 text-sm text-white/80">{s.label}</p>
-              </div>
-            );
-          })}
+          {stats.map((s) => (
+            <Stat key={s.label} s={s} inView={inView} />
+          ))}
         </div>
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+function Stat({ s, inView }: { s: (typeof stats)[number]; inView: boolean }) {
+  const v = useCountUp(s.value, s.decimals ?? 0, inView);
+  return (
+    <div className="text-center">
+      <div className="text-4xl">{s.icon}</div>
+      <div className="mt-3 font-display text-4xl font-extrabold text-[color:var(--gold)] sm:text-5xl">
+        {v}
+        {s.suffix}
+      </div>
+      <p className="mt-2 text-sm text-white/80">{s.label}</p>
     </div>
   );
 }
