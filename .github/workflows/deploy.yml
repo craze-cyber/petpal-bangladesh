@@ -1,0 +1,54 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build static public_html/
+        run: bun run build:hostinger
+        env:
+          HOSTINGER_TARGET_URL: https://pet-bond-bd.lovable.app
+
+      # Option A – FTP upload (recommended for shared hosting / hPanel).
+      # Add these repo secrets in GitHub → Settings → Secrets and variables → Actions:
+      #   FTP_SERVER         e.g. ftp.bpacvet.com
+      #   FTP_USERNAME       your hPanel FTP user
+      #   FTP_PASSWORD       your hPanel FTP password
+      - name: Deploy via FTP
+        if: ${{ secrets.FTP_SERVER != '' }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./public_html/
+          server-dir: /public_html/
+
+      # Option B – SSH/rsync (use this instead of Option A for VPS).
+      # Add repo secrets: SSH_HOST, SSH_USER, SSH_PRIVATE_KEY, SSH_TARGET_DIR
+      # then uncomment the steps below and delete the FTP step above.
+      #
+      # - name: Configure SSH
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+      # - name: rsync to VPS
+      #   run: |
+      #     rsync -avz --delete ./public_html/ \
+      #       ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET_DIR }}
