@@ -1,11 +1,6 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ShoppingBag, Stethoscope, FlaskConical, Scissors, BookOpen, Check } from "lucide-react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
+import { ChevronDown, ShoppingBag, Stethoscope, FlaskConical, Scissors, BookOpen } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FadeUp } from "@/components/site/Motion";
@@ -13,16 +8,16 @@ import { FadeUp } from "@/components/site/Motion";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Birds and Pet Animal Clinic" },
+      { title: "Services — BPAC Vet" },
       {
         name: "description",
         content:
-          "Pet shop, vet clinic, lab tests, grooming and pet education — all five BPAC services in one place.",
+          "Explore BPAC Vet's five services for Bangladesh pet parents: clinic, shop, lab, grooming and the BPAC blog.",
       },
-      { property: "og:title", content: "Services — BPAC" },
+      { property: "og:title", content: "BPAC Vet Services" },
       {
         property: "og:description",
-        content: "Shop, Clinic, Lab, Grooming and Blog services for pets across Bangladesh.",
+        content: "Clinic, shop, lab, grooming and expert care guides — all in one platform.",
       },
     ],
   }),
@@ -31,235 +26,222 @@ export const Route = createFileRoute("/services")({
 
 type Module = {
   id: string;
-  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   name: string;
-  bnName: string;
-  tint: string;
-  features: string[];
+  tagline: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  offerings: string[];
   pricing: string;
-  cta: { label: string; to: "/" | "/contact" };
-  faqs: { q: string; a: string }[];
+  ctaLabel: string;
+  ctaTo: "/shop" | "/contact" | "/blog";
+  faq: { q: string; a: string }[];
 };
 
 const modules: Module[] = [
   {
-    id: "shop",
-    icon: ShoppingBag,
-    name: "Pet Shop",
-    bnName: "পেট শপ",
-    tint: "var(--coral)",
-    features: [
-      "Premium food brands — Royal Canin, Pedigree, Whiskas",
-      "Toys, beds, carriers and accessories",
-      "Vet-prescribed supplements and medicine",
-      "Same-day delivery in Dhaka, 2-day to Chittagong & Sylhet",
+    id: "clinic",
+    name: "Veterinary Clinic",
+    tagline: "Expert care for birds, dogs, cats and exotic pets.",
+    Icon: Stethoscope,
+    offerings: [
+      "General consultations & wellness checks",
+      "Vaccinations (DHPP, anti-rabies, FVRCP)",
+      "Surgery & post-op care",
+      "24/7 emergency line",
     ],
-    pricing: "From ৳150 • Free delivery over ৳1,500",
-    cta: { label: "Shop Now", to: "/" },
-    faqs: [
-      { q: "Do you offer Cash on Delivery?", a: "Yes — COD is available everywhere in Bangladesh, along with bKash, Nagad, Rocket and card payments." },
-      { q: "Are your products authentic?", a: "All food and medicine are sourced directly from authorized importers with batch verification." },
-      { q: "How fast is delivery in Dhaka?", a: "Orders placed before 4 PM are delivered the same day inside Dhaka city." },
+    pricing: "Consultations from ৳800 · Vaccinations from ৳1,200",
+    ctaLabel: "Book Now",
+    ctaTo: "/contact",
+    faq: [
+      { q: "Do you treat birds and exotic pets?", a: "Yes — BPAC Vet's specialty is birds and exotic animals alongside dogs and cats." },
+      { q: "Is there an emergency line?", a: "We operate a 24/7 emergency line on +880 1700-000000." },
+      { q: "Do you do home visits?", a: "Yes, home visits within Dhaka are available with prior booking." },
     ],
   },
   {
-    id: "clinic",
-    icon: Stethoscope,
-    name: "Vet Clinic",
-    bnName: "ভেট ক্লিনিক",
-    tint: "var(--teal)",
-    features: [
-      "In-clinic and home visit consultations",
-      "Vaccinations, deworming and surgery",
-      "24/7 emergency hotline",
-      "Digital health records for every pet",
+    id: "shop",
+    name: "Pet Shop",
+    tagline: "Quality food, accessories and supplements delivered across Bangladesh.",
+    Icon: ShoppingBag,
+    offerings: [
+      "Premium bird, dog and cat food",
+      "Cages, beds, leashes and toys",
+      "Vet-recommended supplements",
+      "Free delivery on orders above ৳999",
     ],
-    pricing: "Consultation from ৳500 • Home visit from ৳1,200",
-    cta: { label: "Book Now", to: "/contact" },
-    faqs: [
-      { q: "Can I book a home visit?", a: "Yes — home visits are available across Dhaka. Sylhet and Chittagong launching soon." },
-      { q: "Do you treat birds and exotic pets?", a: "Absolutely. Our team specializes in birds, rabbits, hamsters and reptiles in addition to cats and dogs." },
-      { q: "What if it's an emergency at night?", a: "Call our 24/7 emergency line at +880 1700-000000 — a vet will respond within minutes." },
+    pricing: "Starting from ৳150 · Cash on Delivery available",
+    ctaLabel: "Shop Now",
+    ctaTo: "/shop",
+    faq: [
+      { q: "Which areas do you deliver to?", a: "All of Dhaka next-day, and 1–3 days nationwide across Bangladesh." },
+      { q: "Do you accept bKash and Nagad?", a: "Yes — bKash, Nagad, Rocket, Card and Cash on Delivery." },
+      { q: "Are the products genuine?", a: "Every product is sourced directly from authorised distributors in Bangladesh." },
     ],
   },
   {
     id: "lab",
-    icon: FlaskConical,
-    name: "Diagnostic Lab",
-    bnName: "ল্যাব",
-    tint: "#9b7bd4",
-    features: [
-      "Blood tests, urinalysis and microbiology",
-      "X-ray, ultrasound and ECG",
-      "Sample pickup from home",
-      "Reports delivered digitally in 24 hours",
+    name: "Pet Laboratory",
+    tagline: "Diagnostic tests with vet-reviewed reports.",
+    Icon: FlaskConical,
+    offerings: [
+      "Blood work (CBC, biochemistry)",
+      "Stool & urine analysis",
+      "X-ray and ultrasound",
+      "Sample collection at home in Dhaka",
     ],
-    pricing: "Tests from ৳400 • Home sample pickup ৳200",
-    cta: { label: "Book Now", to: "/contact" },
-    faqs: [
-      { q: "Do I need a vet prescription?", a: "Not for basic tests. For specialized panels we'll route you to a vet first to make sure we run the right tests." },
-      { q: "Can I get reports on WhatsApp?", a: "Yes — all reports are delivered via WhatsApp and email within 24 hours." },
-      { q: "Is sample pickup safe for my pet?", a: "Our trained technicians come to your home and collect samples with minimal stress for your pet." },
+    pricing: "Tests from ৳600 · Home collection ৳300",
+    ctaLabel: "Book Now",
+    ctaTo: "/contact",
+    faq: [
+      { q: "How fast do I get the report?", a: "Most reports are ready within 24 hours and delivered via WhatsApp." },
+      { q: "Is home sample collection available?", a: "Yes, anywhere in Dhaka with prior booking." },
+      { q: "Will a vet explain the report?", a: "Yes — every report includes a free 10-minute consultation." },
     ],
   },
   {
     id: "grooming",
-    icon: Scissors,
-    name: "Grooming",
-    bnName: "গ্রুমিং",
-    tint: "var(--yellow)",
-    features: [
-      "Bath, blow-dry and styling",
-      "Nail trim, ear cleaning, teeth brushing",
+    name: "Grooming Services",
+    tagline: "Professional grooming by trained pet stylists.",
+    Icon: Scissors,
+    offerings: [
+      "Bath, brush and blow-dry",
+      "Nail trim and ear cleaning",
       "Breed-specific haircuts",
-      "Mobile grooming van for home service",
+      "Bird wing & beak trimming",
     ],
-    pricing: "Basic from ৳800 • Full grooming from ৳1,800",
-    cta: { label: "Book Now", to: "/contact" },
-    faqs: [
-      { q: "How long does a grooming session take?", a: "Basic grooming takes 45–60 minutes; full grooming with styling can take up to 2 hours." },
-      { q: "Do you handle aggressive or anxious pets?", a: "Yes — our groomers are trained in low-stress handling and we can sedate when medically advised." },
-      { q: "Is mobile grooming more expensive?", a: "Home service adds ৳500 to the standard package — well worth it for an anxious pet." },
+    pricing: "Packages from ৳1,500 · Membership 20% off",
+    ctaLabel: "Book Now",
+    ctaTo: "/contact",
+    faq: [
+      { q: "Do you groom birds?", a: "Yes — our groomers are trained for safe wing, nail and beak care." },
+      { q: "How long does a session take?", a: "Most sessions take 45–90 minutes depending on the pet." },
+      { q: "Can I stay during grooming?", a: "Absolutely — we welcome owners to wait in our lounge." },
     ],
   },
   {
     id: "blog",
-    icon: BookOpen,
-    name: "Pet Education",
-    bnName: "শিক্ষা",
-    tint: "var(--coral-light)",
-    features: [
-      "Care guides written by Bangladeshi vets",
-      "Bilingual content — English and বাংলা",
-      "Breed guides for popular BD pets",
-      "Free weekly newsletter",
+    name: "BPAC Vet Blog",
+    tagline: "Vet-written care guides for Bangladesh pet parents.",
+    Icon: BookOpen,
+    offerings: [
+      "Bird care guides (Cockatiel, Budgie, African Grey)",
+      "Vaccination & nutrition schedules",
+      "Emergency warning signs",
+      "Bangla and English content",
     ],
-    pricing: "Always free",
-    cta: { label: "Read Blog", to: "/" },
-    faqs: [
-      { q: "Who writes the articles?", a: "All content is written or reviewed by licensed veterinarians on the BPAC team." },
-      { q: "Can I request a topic?", a: "Yes — email hello@bpacvet.com and we'll cover it in an upcoming post." },
-      { q: "Is the content in Bangla?", a: "Most articles are bilingual — toggle at the top of each post to switch between English and বাংলা." },
+    pricing: "Free — read anytime",
+    ctaLabel: "Read Articles",
+    ctaTo: "/blog",
+    faq: [
+      { q: "Who writes the articles?", a: "Articles are written and reviewed by BPAC Vet's in-house veterinary team." },
+      { q: "Can I request a topic?", a: "Yes — email info@bpacvet.com with the topic you'd like covered." },
+      { q: "Is the content in Bangla?", a: "Several articles are published in Bangla, with more added every month." },
     ],
   },
 ];
 
 function ServicesPage() {
   return (
-    <div className="min-h-screen bg-[color:var(--background)] text-[color:var(--charcoal)]">
+    <div className="min-h-screen bg-[color:var(--bg-clinic)] text-[color:var(--charcoal)]">
       <Header />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[color:var(--pink-soft)] via-white to-[#f0fbfa] py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
+      <section className="bg-gradient-to-br from-[color:var(--teal)] to-[color:var(--teal-dark)] py-20 text-white">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <FadeUp>
-            <span className="inline-block rounded-full bg-[color:var(--coral)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--coral)]">
-              Our Services
-            </span>
-            <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight sm:text-5xl">
-              Everything your pet needs, <br className="hidden sm:block" />
-              under one roof
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--gold)]">Our Services</p>
+            <h1 className="mt-4 font-display text-4xl font-extrabold sm:text-5xl">
+              Five services. One trusted platform.
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-[color:var(--gray-soft)] sm:text-lg">
-              Five connected services so you never have to juggle vendors for your pet's care.
+            <p className="mx-auto mt-5 max-w-2xl text-white/85">
+              From the clinic floor to your doorstep — BPAC Vet covers everything your pet needs in Bangladesh.
             </p>
           </FadeUp>
-          <div className="mt-8 flex flex-wrap justify-center gap-2">
-            {modules.map((m) => (
-              <a
-                key={m.id}
-                href={`#${m.id}`}
-                className="rounded-full bg-white px-4 py-2 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow"
-              >
-                <m.icon className="mr-1.5 inline h-4 w-4" style={{ color: m.tint }} />
-                {m.name}
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Modules */}
-      <div className="mx-auto max-w-7xl space-y-24 px-4 py-20 sm:px-6 lg:px-8">
-        {modules.map((m, idx) => (
-          <section key={m.id} id={m.id} className="scroll-mt-24">
-            <FadeUp>
-              <div className="grid items-start gap-10 lg:grid-cols-[1fr,1.3fr] lg:gap-16">
-                <div>
-                  <div
-                    className="grid h-20 w-20 place-items-center rounded-3xl text-white shadow-lg"
-                    style={{ backgroundColor: m.tint }}
-                  >
-                    <m.icon className="h-10 w-10" />
-                  </div>
-                  <h2 className="mt-5 font-display text-3xl font-extrabold sm:text-4xl">
-                    {m.name}
-                  </h2>
-                  <p className="font-bn text-base text-[color:var(--gray-soft)]">{m.bnName}</p>
-
-                  <ul className="mt-6 space-y-3">
-                    {m.features.map((f) => (
-                      <li key={f} className="flex gap-3 text-sm">
-                        <span
-                          className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-white"
-                          style={{ backgroundColor: m.tint }}
-                        >
-                          <Check className="h-3 w-3" />
-                        </span>
-                        <span className="text-[color:var(--charcoal)]">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-6 rounded-2xl bg-[color:var(--pink-soft)] p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--gray-soft)]">
-                      Pricing
-                    </p>
-                    <p className="mt-1 font-display text-lg font-extrabold">{m.pricing}</p>
-                  </div>
-
-                  <Link
-                    to={m.cta.to}
-                    className="mt-6 inline-flex h-12 items-center justify-center rounded-full px-8 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
-                    style={{ backgroundColor: m.tint }}
-                  >
-                    {m.cta.label}
-                  </Link>
-                </div>
-
-                <div>
-                  <h3 className="font-display text-xl font-extrabold">
-                    Frequently asked questions
-                  </h3>
-                  <div className="mt-3 rounded-3xl bg-white p-2 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-                    <Accordion type="single" collapsible className="w-full">
-                      {m.faqs.map((f, i) => (
-                        <AccordionItem
-                          key={i}
-                          value={`${m.id}-${i}`}
-                          className="border-b border-[color:var(--pink-soft)] px-4 last:border-b-0"
-                        >
-                          <AccordionTrigger className="text-left text-sm font-semibold hover:no-underline">
-                            {f.q}
-                          </AccordionTrigger>
-                          <AccordionContent className="text-sm text-[color:var(--gray-soft)]">
-                            {f.a}
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                  </div>
-                </div>
-              </div>
-            </FadeUp>
-            {idx < modules.length - 1 && (
-              <div className="mx-auto mt-20 h-px max-w-2xl bg-gradient-to-r from-transparent via-[color:var(--border)] to-transparent" />
-            )}
-          </section>
+      <main className="mx-auto max-w-5xl space-y-16 px-4 py-20 sm:px-6">
+        {modules.map((m, i) => (
+          <FadeUp key={m.id} delay={i * 0.04}>
+            <ModuleCard m={m} />
+          </FadeUp>
         ))}
-      </div>
+      </main>
 
       <Footer />
     </div>
+  );
+}
+
+function ModuleCard({ m }: { m: Module }) {
+  return (
+    <section
+      id={m.id}
+      className="overflow-hidden rounded-3xl bg-white shadow-[0_10px_40px_rgba(11,110,110,0.08)]"
+    >
+      <div className="grid gap-8 p-8 md:grid-cols-[auto,1fr] md:gap-10 md:p-12">
+        <div className="grid h-20 w-20 place-items-center rounded-2xl bg-[color:var(--teal-tint)] text-[color:var(--teal)]">
+          <m.Icon className="h-10 w-10" />
+        </div>
+        <div>
+          <h2 className="font-display text-3xl font-extrabold">{m.name}</h2>
+          <p className="mt-2 text-[color:var(--gray-soft)]">{m.tagline}</p>
+
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            {m.offerings.map((o) => (
+              <li key={o} className="flex items-start gap-2 text-sm">
+                <span className="mt-0.5 text-[color:var(--gold)]">✓</span>
+                <span>{o}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 rounded-xl bg-[color:var(--bg-clinic)] p-4 text-sm font-semibold text-[color:var(--teal-dark)]">
+            {m.pricing}
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              to={m.ctaTo}
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[color:var(--teal)] px-7 text-sm font-bold text-white shadow transition hover:bg-[color:var(--teal-dark)]"
+            >
+              {m.ctaLabel}
+            </Link>
+            <Link
+              to="/contact"
+              className="inline-flex h-12 items-center justify-center rounded-full border-2 border-[color:var(--teal)] px-7 text-sm font-bold text-[color:var(--teal)] transition hover:bg-[color:var(--teal-tint)]"
+            >
+              Ask a Question
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-[color:var(--bg-clinic)] bg-[color:var(--bg-clinic)]/40 p-8 md:p-12">
+        <h3 className="font-display text-xl font-extrabold">Frequently Asked Questions</h3>
+        <div className="mt-4 divide-y divide-black/5 rounded-2xl bg-white">
+          {m.faq.map((f) => (
+            <FaqItem key={f.q} q={f.q} a={f.a} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => setOpen((v) => !v)}
+      className="flex w-full flex-col items-stretch px-5 py-4 text-left transition hover:bg-[color:var(--teal-tint)]/40"
+    >
+      <div className="flex items-center justify-between gap-4">
+        <span className="font-semibold">{q}</span>
+        <ChevronDown
+          className={`h-5 w-5 shrink-0 text-[color:var(--teal)] transition ${open ? "rotate-180" : ""}`}
+        />
+      </div>
+      {open && <p className="mt-3 text-sm text-[color:var(--gray-soft)]">{a}</p>}
+    </button>
   );
 }

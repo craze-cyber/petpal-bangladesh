@@ -1,154 +1,173 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Linkedin, MapPin, Stethoscope, PawPrint, Star, Heart, Building2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Linkedin } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { FadeUp, Counter } from "@/components/site/Motion";
+import { FadeUp } from "@/components/site/Motion";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Birds and Pet Animal Clinic" },
+      { title: "About — BPAC Vet | Birds and Pet Animal Clinic" },
       {
         name: "description",
         content:
-          "Bangladesh's first complete pet care platform — meet the team behind BPAC and our mission to give every pet the best care.",
+          "Since 2020, BPAC Vet has been Bangladesh's trusted veterinary care platform for birds and all pet animals.",
       },
-      { property: "og:title", content: "About — Birds and Pet Animal Clinic" },
+      { property: "og:title", content: "About BPAC Vet" },
       {
         property: "og:description",
-        content: "Meet the people behind Bangladesh's first complete pet care platform.",
+        content: "Bangladesh's trusted veterinary care platform — clinic, shop, lab and grooming in one place.",
       },
     ],
   }),
   component: AboutPage,
 });
 
+const mission = [
+  { icon: "🐦", text: "Specialized care for birds and exotic pets across Bangladesh" },
+  { icon: "🏥", text: "Connect pets with qualified vets available 24/7" },
+  { icon: "🌐", text: "Build Bangladesh's most trusted pet health platform" },
+];
+
 const team = [
   {
     name: "Dr. Farhan Ahmed",
     role: "Chief Veterinary Officer",
-    bio: "15+ years caring for pets across Dhaka and Chittagong.",
-    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&auto=format&fit=crop",
+    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&auto=format&fit=crop",
   },
   {
     name: "Rashida Khanom",
-    role: "Co-Founder & CEO",
-    bio: "On a mission to make pet care accessible to every Bangladeshi family.",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop",
+    role: "Founder & CEO",
+    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop",
   },
   {
     name: "Tanvir Hassan",
     role: "Head of Technology",
-    bio: "Builds the tech that connects pets, vets and owners across BD.",
-    photo: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=400&auto=format&fit=crop",
+    photo: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&auto=format&fit=crop",
   },
   {
     name: "Sadia Islam",
     role: "Head of Grooming Services",
-    bio: "Certified groomer with a soft spot for street rescues.",
-    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop",
+    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop",
   },
 ];
 
-const facilities = [
-  "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1606425271399-abf3f5ce5374?w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1559190394-df5a28aab5c5?w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&auto=format&fit=crop",
+const stats = [
+  { icon: "🐦", value: 5000, suffix: "+", label: "Animals Treated" },
+  { icon: "👨‍⚕️", value: 12, suffix: "+", label: "Expert Vet Team" },
+  { icon: "📍", value: 1, suffix: "", label: "Dhaka & Expanding" },
+  { icon: "⭐", value: 4.9, suffix: "", label: "Average Rating", decimals: 1 },
 ];
 
+function useCountUp(end: number, decimals = 0, start = false) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    const dur = 1600;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - t0) / dur);
+      setVal(end * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [end, start]);
+  return decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString();
+}
+
 function AboutPage() {
+  const statsRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = statsRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => e.isIntersecting && setInView(true),
+      { threshold: 0.3 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[color:var(--background)] text-[color:var(--charcoal)]">
+    <div className="min-h-screen bg-[color:var(--bg-clinic)] text-[color:var(--charcoal)]">
       <Header />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[color:var(--teal)] via-[#5fd6ce] to-[#7ee0d8] py-20 text-white sm:py-28">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)", backgroundSize: "24px 24px" }} />
-        <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[color:var(--teal)] via-[#0d7878] to-[color:var(--teal-dark)] py-24 text-white">
+        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
           <FadeUp>
-            <span className="inline-block rounded-full bg-white/20 px-4 py-1.5 text-xs font-semibold tracking-wide backdrop-blur">
-              আমাদের গল্প
-            </span>
-            <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
-              Bangladesh's First Complete <br className="hidden sm:block" />
-              Pet Care Platform
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--gold)]">
+              About BPAC Vet
+            </p>
+            <h1 className="font-display text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
+              Bangladesh's Trusted Veterinary Care Platform
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base text-white/90 sm:text-lg">
-              Started in 2024 in Dhaka, we are on a mission to give every pet in Bangladesh the
-              best care possible.
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/85">
+              Since 2020, BPAC Vet has been dedicated to providing expert care for birds and all pet animals across Bangladesh.
             </p>
           </FadeUp>
         </div>
       </section>
 
-      {/* Our Story */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      {/* OUR STORY */}
+      <section className="py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 md:grid-cols-2">
           <FadeUp>
-            <span className="text-sm font-semibold uppercase tracking-wider text-[color:var(--coral)]">
-              Our Story
-            </span>
+            <p className="text-sm font-bold uppercase tracking-widest text-[color:var(--teal)]">Our Story</p>
             <h2 className="mt-3 font-display text-3xl font-extrabold sm:text-4xl">
-              Built by pet parents, for pet parents
+              From a small clinic to a national platform
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-[color:var(--gray-soft)] sm:text-lg">
-              We started Birds and Pet Animal Clinic after struggling to find good veterinary
-              care for our own pets in Dhaka. We realized pet owners across Bangladesh faced the
-              same problem — scattered services, no trusted platform, no easy booking system.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-[color:var(--gray-soft)] sm:text-lg">
-              So we built everything in one place.
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1200&auto=format&fit=crop"
-                alt="Veterinarian with a happy dog"
-                className="aspect-[4/3] w-full rounded-3xl object-cover shadow-[0_20px_50px_-15px_rgba(0,0,0,0.25)]"
-              />
-              <div className="absolute -bottom-6 -left-6 hidden rounded-2xl bg-white p-4 shadow-xl md:block">
-                <div className="flex items-center gap-3">
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-[color:var(--pink-soft)] text-[color:var(--coral)]">
-                    <Heart className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-[color:var(--gray-soft)]">Since</p>
-                    <p className="font-display text-lg font-extrabold">2024</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* Mission */}
-      <section className="bg-[color:var(--pink-soft)] py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="font-display text-3xl font-extrabold sm:text-4xl">Our Mission</h2>
-              <p className="mt-3 text-[color:var(--gray-soft)]">
-                Three promises we make to every pet parent in Bangladesh.
+            <div className="mt-6 space-y-4 text-[color:var(--gray-soft)]">
+              <p>
+                We started BPAC Vet after recognizing that birds and exotic pet owners in Bangladesh had very limited access to specialized veterinary care.
+              </p>
+              <p>
+                We built a complete platform — clinic, shop, lab, and grooming — all in one place at{" "}
+                <a href="https://www.bpacvet.com" className="font-bold text-[color:var(--teal)] hover:underline">
+                  www.bpacvet.com
+                </a>
+                .
+              </p>
+              <p className="italic text-[color:var(--teal-dark)]">
+                "Our primary goal is to serve your animals."
               </p>
             </div>
           </FadeUp>
+          <FadeUp delay={0.1}>
+            <div className="overflow-hidden rounded-3xl shadow-[0_20px_60px_rgba(11,110,110,0.18)]">
+              <img
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=900&q=80"
+                alt="Veterinarian examining a pet"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* MISSION */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeUp>
+            <div className="text-center">
+              <p className="text-sm font-bold uppercase tracking-widest text-[color:var(--teal)]">Our Mission</p>
+              <h2 className="mt-3 font-display text-3xl font-extrabold sm:text-4xl">
+                What drives BPAC Vet every day
+              </h2>
+            </div>
+          </FadeUp>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              { icon: "🐾", text: "Make pet care accessible to every pet owner in Bangladesh" },
-              { icon: "🏥", text: "Connect pets with qualified vets available 24/7" },
-              { icon: "💚", text: "Build Bangladesh's largest pet health record system" },
-            ].map((m, i) => (
-              <FadeUp key={i} delay={i * 0.1}>
-                <div className="h-full rounded-3xl bg-white p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
-                  <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-[color:var(--pink-soft)] text-3xl">
-                    {m.icon}
-                  </div>
-                  <p className="mt-5 text-base font-semibold leading-relaxed">{m.text}</p>
+            {mission.map((m, i) => (
+              <FadeUp key={m.text} delay={i * 0.08}>
+                <div className="h-full rounded-2xl border-t-4 border-[color:var(--gold)] bg-[color:var(--bg-clinic)] p-8 transition hover:-translate-y-1 hover:shadow-xl">
+                  <div className="text-4xl">{m.icon}</div>
+                  <p className="mt-4 font-display text-lg font-bold text-[color:var(--charcoal)]">
+                    {m.text}
+                  </p>
                 </div>
               </FadeUp>
             ))}
@@ -156,103 +175,64 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <FadeUp>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-extrabold sm:text-4xl">
-              The People Who Care
-            </h2>
-            <p className="mt-3 text-[color:var(--gray-soft)]">
-              A small team of vets, technologists and pet lovers based in Dhaka.
-            </p>
-          </div>
-        </FadeUp>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((p, i) => (
-            <FadeUp key={p.name} delay={i * 0.08}>
-              <div className="group rounded-3xl bg-white p-6 text-center shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
-                <div className="mx-auto h-24 w-24 overflow-hidden rounded-full ring-4 ring-[color:var(--pink-soft)]">
-                  <img src={p.photo} alt={p.name} className="h-full w-full object-cover" />
-                </div>
-                <h3 className="mt-4 font-display text-lg font-extrabold">{p.name}</h3>
-                <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--coral)]">
-                  {p.role}
-                </p>
-                <p className="mt-2 text-sm text-[color:var(--gray-soft)]">{p.bio}</p>
-                <a
-                  href="#"
-                  aria-label={`${p.name} on LinkedIn`}
-                  className="mt-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#0a66c2]/10 text-[#0a66c2] transition hover:bg-[#0a66c2] hover:text-white"
-                >
-                  <Linkedin className="h-4 w-4" />
-                </a>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="bg-gradient-to-br from-[color:var(--coral)] to-[color:var(--coral-light)] py-16 text-white">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-4 sm:px-6 md:grid-cols-4 lg:px-8">
-          {[
-            { icon: MapPin, value: 3, suffix: "", label: "Cities" },
-            { icon: Stethoscope, value: 50, suffix: "+", label: "Vets" },
-            { icon: PawPrint, value: 10000, suffix: "+", label: "Pets" },
-            { icon: Star, value: 4.9, suffix: "★", label: "Rating" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <s.icon className="mx-auto h-7 w-7 opacity-90" />
-              <div className="mt-2 font-display text-4xl font-extrabold sm:text-5xl">
-                {s.value === 4.9 ? "4.9" : <Counter to={s.value} suffix={s.suffix} />}
-                {s.value === 4.9 && <span>★</span>}
-              </div>
-              <p className="mt-1 text-sm font-semibold uppercase tracking-wide opacity-90">
-                {s.label}
-              </p>
+      {/* TEAM */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeUp>
+            <div className="text-center">
+              <p className="text-sm font-bold uppercase tracking-widest text-[color:var(--teal)]">Our People</p>
+              <h2 className="mt-3 font-display text-3xl font-extrabold sm:text-4xl">
+                The People Behind BPAC Vet
+              </h2>
             </div>
-          ))}
+          </FadeUp>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((m, i) => (
+              <FadeUp key={m.name} delay={i * 0.06}>
+                <div className="rounded-2xl bg-white p-6 text-center shadow-[0_6px_24px_rgba(0,0,0,0.06)] transition hover:-translate-y-1">
+                  <div className="mx-auto h-32 w-32 overflow-hidden rounded-full ring-4 ring-[color:var(--teal-tint)]">
+                    <img src={m.photo} alt={m.name} className="h-full w-full object-cover" />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-extrabold">{m.name}</h3>
+                  <p className="mt-1 text-sm text-[color:var(--teal)]">{m.role}</p>
+                  <a
+                    href="#"
+                    aria-label={`${m.name} on LinkedIn`}
+                    className="mt-3 inline-grid h-9 w-9 place-items-center rounded-full bg-[color:var(--teal)]/10 text-[color:var(--teal)] transition hover:bg-[color:var(--teal)] hover:text-white"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Facilities */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <FadeUp>
-          <div className="mx-auto max-w-2xl text-center">
-            <Building2 className="mx-auto h-8 w-8 text-[color:var(--teal)]" />
-            <h2 className="mt-3 font-display text-3xl font-extrabold sm:text-4xl">
-              Our Facilities
-            </h2>
-            <p className="mt-3 text-[color:var(--gray-soft)]">
-              A peek inside our clinic, lab and grooming center in Dhanmondi.
-            </p>
-          </div>
-        </FadeUp>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {facilities.map((src, i) => (
-            <FadeUp key={i} delay={i * 0.05}>
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl">
-                <img
-                  src={src}
-                  alt={`Facility ${i + 1}`}
-                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                />
-              </div>
-            </FadeUp>
+      {/* STATS */}
+      <section className="bg-[color:var(--teal-dark)] py-20 text-white" ref={statsRef}>
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
+          {stats.map((s) => (
+            <Stat key={s.label} s={s} inView={inView} />
           ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link
-            to="/contact"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[color:var(--coral)] px-8 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--coral-dark)]"
-          >
-            Schedule a Visit
-          </Link>
         </div>
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+function Stat({ s, inView }: { s: (typeof stats)[number]; inView: boolean }) {
+  const v = useCountUp(s.value, s.decimals ?? 0, inView);
+  return (
+    <div className="text-center">
+      <div className="text-4xl">{s.icon}</div>
+      <div className="mt-3 font-display text-4xl font-extrabold text-[color:var(--gold)] sm:text-5xl">
+        {v}
+        {s.suffix}
+      </div>
+      <p className="mt-2 text-sm text-white/80">{s.label}</p>
     </div>
   );
 }
