@@ -1,0 +1,9 @@
+# Minimal webhook listener image. Includes git + docker CLI so it can pull
+# the repo and trigger `docker compose up -d --build` on the host via the
+# mounted docker socket.
+FROM node:20-alpine
+RUN apk add --no-cache git docker-cli docker-cli-compose
+WORKDIR /app
+COPY scripts/webhook-redeploy.mjs ./webhook-redeploy.mjs
+EXPOSE 9000
+CMD ["node", "/app/webhook-redeploy.mjs"]
