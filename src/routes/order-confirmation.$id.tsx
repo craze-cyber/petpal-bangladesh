@@ -26,7 +26,7 @@ function Confirmation() {
         <p className="mt-3 text-[color:var(--gray-soft)]">Thank you for shopping with BPAC. We'll text you when your order ships.</p>
         <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-widest text-[color:var(--gray-soft)]">Order Number</p>
-          <p className="mt-1 font-display text-2xl font-extrabold text-[color:var(--coral)]">{id}</p>
+          <p className="mt-1 font-display text-2xl font-extrabold text-[color:var(--coral)]">#{id}</p>
           <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-[color:var(--gray-soft)]">Estimated Delivery</p>
           <p className="mt-1 font-display font-bold text-[color:var(--charcoal)]">{tomorrow} by 6 PM</p>
         </div>

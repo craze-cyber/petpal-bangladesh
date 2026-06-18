@@ -41,7 +41,7 @@ function CheckoutPage() {
   }), []);
 
   const placeOrder = () => {
-    const orderNum = "#BPV-2025-" + String(Math.floor(Math.random() * 90000) + 10000);
+    const orderNum = "BPV-2025-" + String(Math.floor(Math.random() * 90000) + 10000);
     const order = { id: orderNum, items, subtotal, delivery, codCharge, total, address, date, slot, payment, createdAt: Date.now() };
     try { localStorage.setItem("bpac_last_order", JSON.stringify(order)); } catch {}
     clear();
