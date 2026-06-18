@@ -17,7 +17,7 @@ const PAYMENTS = [
   { id: "nagad", label: "Nagad", icon: "🟠" },
   { id: "rocket", label: "Rocket (DBBL)", icon: "🔵" },
   { id: "card", label: "Credit/Debit Card", icon: "💳" },
-  { id: "cod", label: "Cash on Delivery", icon: "💵", note: "Extra ৳30 COD charge" },
+  { id: "cod", label: "Cash on Delivery", icon: "💵", note: "Extra ৳50 COD charge" },
   { id: "wallet", label: "BPAC Wallet", icon: "💰", note: "Balance: ৳350" },
 ];
 
@@ -31,7 +31,7 @@ function CheckoutPage() {
   const [payment, setPayment] = useState("bkash");
   const [payNum, setPayNum] = useState("");
 
-  const codCharge = payment === "cod" ? 30 : 0;
+  const codCharge = payment === "cod" ? 50 : 0;
   const delivery = subtotal >= 999 ? 0 : 60;
   const total = subtotal + delivery + codCharge;
 
@@ -41,7 +41,7 @@ function CheckoutPage() {
   }), []);
 
   const placeOrder = () => {
-    const orderNum = "PBD-2024-" + String(Math.floor(Math.random() * 90000) + 10000);
+    const orderNum = "#BPV-2025-" + String(Math.floor(Math.random() * 90000) + 10000);
     const order = { id: orderNum, items, subtotal, delivery, codCharge, total, address, date, slot, payment, createdAt: Date.now() };
     try { localStorage.setItem("bpac_last_order", JSON.stringify(order)); } catch {}
     clear();

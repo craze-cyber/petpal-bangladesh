@@ -23,9 +23,9 @@ export const Route = createFileRoute("/shop/")({
 });
 
 const BANNERS = [
-  { title: "Eid Special — 20% off all cat food", sub: "Use code EID20 at checkout", bg: "linear-gradient(135deg,#4ECDC4,#2BB0A7)", fg: "text-white" },
-  { title: "Free delivery on orders above ৳999", sub: "Across Dhaka, Chittagong, Sylhet & Rajshahi", bg: "linear-gradient(135deg,#FF6B6B,#FF8E53)", fg: "text-white" },
-  { title: "New: Royal Canin Bangladesh", sub: "Vet-formulated nutrition, now in stock", bg: "linear-gradient(135deg,#2D3436,#636E72)", fg: "text-white" },
+  { title: "Bird Food Sale — 20% off this week", sub: "Premium seed mixes, pellets & treats for your bird", bg: "linear-gradient(135deg,#0B6E6E,#0E8A8A)", fg: "text-white" },
+  { title: "Free delivery on orders above ৳999", sub: "Across Dhaka, Chittagong, Sylhet & Rajshahi", bg: "linear-gradient(135deg,#084F4F,#0B6E6E)", fg: "text-white" },
+  { title: "New arrival: Premium Bird Cages", sub: "Stainless steel cages — built for comfort and safety", bg: "linear-gradient(135deg,#C8963C,#E0B05A)", fg: "text-white" },
 ];
 
 function BannerCarousel() {
@@ -75,7 +75,7 @@ function Countdown() {
     <div className="flex items-center gap-2 font-display text-2xl font-extrabold tabular-nums">
       {[h, m, s].map((v, i) => (
         <span key={i} className="flex items-center gap-2">
-          <span className="grid h-12 w-12 place-items-center rounded-xl bg-white text-[color:var(--coral)] shadow-inner">{v}</span>
+          <span className="grid h-12 w-12 place-items-center rounded-xl bg-white text-[#C0392B] shadow-inner">{v}</span>
           {i < 2 && <span className="text-white/80">:</span>}
         </span>
       ))}
@@ -119,12 +119,12 @@ function ShopHome() {
         </Section>
 
         <section className="mt-14">
-          <div className="rounded-3xl bg-[color:var(--coral)] p-6 sm:p-8">
+          <div className="rounded-3xl bg-gradient-to-r from-[#C0392B] to-[#E04A3A] p-6 sm:p-8">
             <div className="flex flex-col items-center justify-between gap-5 sm:flex-row">
               <div className="flex items-center gap-3 text-white">
                 <div className="grid h-12 w-12 place-items-center rounded-full bg-white/20"><Zap className="h-6 w-6" /></div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest opacity-90">Limited Time</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest opacity-90">⚡ Limited Time</p>
                   <h2 className="font-display text-2xl font-extrabold sm:text-3xl">Flash Sale — Ends in:</h2>
                 </div>
               </div>
@@ -151,8 +151,8 @@ function ShopHome() {
           </div>
         </Section>
 
-        <Section title="Shop by Pet Type">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-4">
+        <Section title="Shop by Pet">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 sm:gap-4">
             {PET_TYPES.map((p) => (
               <Link
                 key={p.slug}
