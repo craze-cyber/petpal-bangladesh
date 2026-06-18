@@ -15,17 +15,27 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ClinicRouteImport } from './routes/clinic'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
+import { Route as ClinicIndexRouteImport } from './routes/clinic.index'
 import { Route as OrdersIdRouteImport } from './routes/orders.$id'
 import { Route as OrderConfirmationIdRouteImport } from './routes/order-confirmation.$id'
+import { Route as ClinicVaccinationsRouteImport } from './routes/clinic.vaccinations'
+import { Route as ClinicDoctorsRouteImport } from './routes/clinic.doctors'
+import { Route as ClinicBookRouteImport } from './routes/clinic.book'
+import { Route as ClinicAppointmentsRouteImport } from './routes/clinic.appointments'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as ClinicDoctorsIndexRouteImport } from './routes/clinic.doctors.index'
+import { Route as ClinicAppointmentsIndexRouteImport } from './routes/clinic.appointments.index'
 import { Route as ShopProductIdRouteImport } from './routes/shop.product.$id'
 import { Route as ShopCategorySlugRouteImport } from './routes/shop.category.$slug'
+import { Route as ClinicDoctorsIdRouteImport } from './routes/clinic.doctors.$id'
+import { Route as ClinicAppointmentsIdRouteImport } from './routes/clinic.appointments.$id'
 
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
@@ -55,6 +65,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClinicRoute = ClinicRouteImport.update({
+  id: '/clinic',
+  path: '/clinic',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -87,6 +102,11 @@ const ShopIndexRoute = ShopIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ShopRoute,
 } as any)
+const ClinicIndexRoute = ClinicIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ClinicRoute,
+} as any)
 const OrdersIdRoute = OrdersIdRouteImport.update({
   id: '/orders/$id',
   path: '/orders/$id',
@@ -97,10 +117,40 @@ const OrderConfirmationIdRoute = OrderConfirmationIdRouteImport.update({
   path: '/order-confirmation/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClinicVaccinationsRoute = ClinicVaccinationsRouteImport.update({
+  id: '/vaccinations',
+  path: '/vaccinations',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicDoctorsRoute = ClinicDoctorsRouteImport.update({
+  id: '/doctors',
+  path: '/doctors',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicBookRoute = ClinicBookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => ClinicRoute,
+} as any)
+const ClinicAppointmentsRoute = ClinicAppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
+  getParentRoute: () => ClinicRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => BlogRoute,
+} as any)
+const ClinicDoctorsIndexRoute = ClinicDoctorsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ClinicDoctorsRoute,
+} as any)
+const ClinicAppointmentsIndexRoute = ClinicAppointmentsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ClinicAppointmentsRoute,
 } as any)
 const ShopProductIdRoute = ShopProductIdRouteImport.update({
   id: '/product/$id',
@@ -112,6 +162,16 @@ const ShopCategorySlugRoute = ShopCategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => ShopRoute,
 } as any)
+const ClinicDoctorsIdRoute = ClinicDoctorsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ClinicDoctorsRoute,
+} as any)
+const ClinicAppointmentsIdRoute = ClinicAppointmentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ClinicAppointmentsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -119,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/clinic': typeof ClinicRouteWithChildren
   '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -126,11 +187,20 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
+  '/clinic/appointments': typeof ClinicAppointmentsRouteWithChildren
+  '/clinic/book': typeof ClinicBookRoute
+  '/clinic/doctors': typeof ClinicDoctorsRouteWithChildren
+  '/clinic/vaccinations': typeof ClinicVaccinationsRoute
   '/order-confirmation/$id': typeof OrderConfirmationIdRoute
   '/orders/$id': typeof OrdersIdRoute
+  '/clinic/': typeof ClinicIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/clinic/appointments/$id': typeof ClinicAppointmentsIdRoute
+  '/clinic/doctors/$id': typeof ClinicDoctorsIdRoute
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/shop/product/$id': typeof ShopProductIdRoute
+  '/clinic/appointments/': typeof ClinicAppointmentsIndexRoute
+  '/clinic/doctors/': typeof ClinicDoctorsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -144,11 +214,18 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/clinic/book': typeof ClinicBookRoute
+  '/clinic/vaccinations': typeof ClinicVaccinationsRoute
   '/order-confirmation/$id': typeof OrderConfirmationIdRoute
   '/orders/$id': typeof OrdersIdRoute
+  '/clinic': typeof ClinicIndexRoute
   '/shop': typeof ShopIndexRoute
+  '/clinic/appointments/$id': typeof ClinicAppointmentsIdRoute
+  '/clinic/doctors/$id': typeof ClinicDoctorsIdRoute
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/shop/product/$id': typeof ShopProductIdRoute
+  '/clinic/appointments': typeof ClinicAppointmentsIndexRoute
+  '/clinic/doctors': typeof ClinicDoctorsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -157,6 +234,7 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/clinic': typeof ClinicRouteWithChildren
   '/contact': typeof ContactRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -164,11 +242,20 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
+  '/clinic/appointments': typeof ClinicAppointmentsRouteWithChildren
+  '/clinic/book': typeof ClinicBookRoute
+  '/clinic/doctors': typeof ClinicDoctorsRouteWithChildren
+  '/clinic/vaccinations': typeof ClinicVaccinationsRoute
   '/order-confirmation/$id': typeof OrderConfirmationIdRoute
   '/orders/$id': typeof OrdersIdRoute
+  '/clinic/': typeof ClinicIndexRoute
   '/shop/': typeof ShopIndexRoute
+  '/clinic/appointments/$id': typeof ClinicAppointmentsIdRoute
+  '/clinic/doctors/$id': typeof ClinicDoctorsIdRoute
   '/shop/category/$slug': typeof ShopCategorySlugRoute
   '/shop/product/$id': typeof ShopProductIdRoute
+  '/clinic/appointments/': typeof ClinicAppointmentsIndexRoute
+  '/clinic/doctors/': typeof ClinicDoctorsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,6 +265,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/cart'
     | '/checkout'
+    | '/clinic'
     | '/contact'
     | '/forgot-password'
     | '/login'
@@ -185,11 +273,20 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/blog/$slug'
+    | '/clinic/appointments'
+    | '/clinic/book'
+    | '/clinic/doctors'
+    | '/clinic/vaccinations'
     | '/order-confirmation/$id'
     | '/orders/$id'
+    | '/clinic/'
     | '/shop/'
+    | '/clinic/appointments/$id'
+    | '/clinic/doctors/$id'
     | '/shop/category/$slug'
     | '/shop/product/$id'
+    | '/clinic/appointments/'
+    | '/clinic/doctors/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -203,11 +300,18 @@ export interface FileRouteTypes {
     | '/register'
     | '/services'
     | '/blog/$slug'
+    | '/clinic/book'
+    | '/clinic/vaccinations'
     | '/order-confirmation/$id'
     | '/orders/$id'
+    | '/clinic'
     | '/shop'
+    | '/clinic/appointments/$id'
+    | '/clinic/doctors/$id'
     | '/shop/category/$slug'
     | '/shop/product/$id'
+    | '/clinic/appointments'
+    | '/clinic/doctors'
   id:
     | '__root__'
     | '/'
@@ -215,6 +319,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/cart'
     | '/checkout'
+    | '/clinic'
     | '/contact'
     | '/forgot-password'
     | '/login'
@@ -222,11 +327,20 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/blog/$slug'
+    | '/clinic/appointments'
+    | '/clinic/book'
+    | '/clinic/doctors'
+    | '/clinic/vaccinations'
     | '/order-confirmation/$id'
     | '/orders/$id'
+    | '/clinic/'
     | '/shop/'
+    | '/clinic/appointments/$id'
+    | '/clinic/doctors/$id'
     | '/shop/category/$slug'
     | '/shop/product/$id'
+    | '/clinic/appointments/'
+    | '/clinic/doctors/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -235,6 +349,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  ClinicRoute: typeof ClinicRouteWithChildren
   ContactRoute: typeof ContactRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
@@ -289,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clinic': {
+      id: '/clinic'
+      path: '/clinic'
+      fullPath: '/clinic'
+      preLoaderRoute: typeof ClinicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
@@ -331,6 +453,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopIndexRouteImport
       parentRoute: typeof ShopRoute
     }
+    '/clinic/': {
+      id: '/clinic/'
+      path: '/'
+      fullPath: '/clinic/'
+      preLoaderRoute: typeof ClinicIndexRouteImport
+      parentRoute: typeof ClinicRoute
+    }
     '/orders/$id': {
       id: '/orders/$id'
       path: '/orders/$id'
@@ -345,12 +474,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderConfirmationIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clinic/vaccinations': {
+      id: '/clinic/vaccinations'
+      path: '/vaccinations'
+      fullPath: '/clinic/vaccinations'
+      preLoaderRoute: typeof ClinicVaccinationsRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/doctors': {
+      id: '/clinic/doctors'
+      path: '/doctors'
+      fullPath: '/clinic/doctors'
+      preLoaderRoute: typeof ClinicDoctorsRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/book': {
+      id: '/clinic/book'
+      path: '/book'
+      fullPath: '/clinic/book'
+      preLoaderRoute: typeof ClinicBookRouteImport
+      parentRoute: typeof ClinicRoute
+    }
+    '/clinic/appointments': {
+      id: '/clinic/appointments'
+      path: '/appointments'
+      fullPath: '/clinic/appointments'
+      preLoaderRoute: typeof ClinicAppointmentsRouteImport
+      parentRoute: typeof ClinicRoute
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
+    }
+    '/clinic/doctors/': {
+      id: '/clinic/doctors/'
+      path: '/'
+      fullPath: '/clinic/doctors/'
+      preLoaderRoute: typeof ClinicDoctorsIndexRouteImport
+      parentRoute: typeof ClinicDoctorsRoute
+    }
+    '/clinic/appointments/': {
+      id: '/clinic/appointments/'
+      path: '/'
+      fullPath: '/clinic/appointments/'
+      preLoaderRoute: typeof ClinicAppointmentsIndexRouteImport
+      parentRoute: typeof ClinicAppointmentsRoute
     }
     '/shop/product/$id': {
       id: '/shop/product/$id'
@@ -366,6 +537,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopCategorySlugRouteImport
       parentRoute: typeof ShopRoute
     }
+    '/clinic/doctors/$id': {
+      id: '/clinic/doctors/$id'
+      path: '/$id'
+      fullPath: '/clinic/doctors/$id'
+      preLoaderRoute: typeof ClinicDoctorsIdRouteImport
+      parentRoute: typeof ClinicDoctorsRoute
+    }
+    '/clinic/appointments/$id': {
+      id: '/clinic/appointments/$id'
+      path: '/$id'
+      fullPath: '/clinic/appointments/$id'
+      preLoaderRoute: typeof ClinicAppointmentsIdRouteImport
+      parentRoute: typeof ClinicAppointmentsRoute
+    }
   }
 }
 
@@ -378,6 +563,52 @@ const BlogRouteChildren: BlogRouteChildren = {
 }
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
+interface ClinicAppointmentsRouteChildren {
+  ClinicAppointmentsIdRoute: typeof ClinicAppointmentsIdRoute
+  ClinicAppointmentsIndexRoute: typeof ClinicAppointmentsIndexRoute
+}
+
+const ClinicAppointmentsRouteChildren: ClinicAppointmentsRouteChildren = {
+  ClinicAppointmentsIdRoute: ClinicAppointmentsIdRoute,
+  ClinicAppointmentsIndexRoute: ClinicAppointmentsIndexRoute,
+}
+
+const ClinicAppointmentsRouteWithChildren =
+  ClinicAppointmentsRoute._addFileChildren(ClinicAppointmentsRouteChildren)
+
+interface ClinicDoctorsRouteChildren {
+  ClinicDoctorsIdRoute: typeof ClinicDoctorsIdRoute
+  ClinicDoctorsIndexRoute: typeof ClinicDoctorsIndexRoute
+}
+
+const ClinicDoctorsRouteChildren: ClinicDoctorsRouteChildren = {
+  ClinicDoctorsIdRoute: ClinicDoctorsIdRoute,
+  ClinicDoctorsIndexRoute: ClinicDoctorsIndexRoute,
+}
+
+const ClinicDoctorsRouteWithChildren = ClinicDoctorsRoute._addFileChildren(
+  ClinicDoctorsRouteChildren,
+)
+
+interface ClinicRouteChildren {
+  ClinicAppointmentsRoute: typeof ClinicAppointmentsRouteWithChildren
+  ClinicBookRoute: typeof ClinicBookRoute
+  ClinicDoctorsRoute: typeof ClinicDoctorsRouteWithChildren
+  ClinicVaccinationsRoute: typeof ClinicVaccinationsRoute
+  ClinicIndexRoute: typeof ClinicIndexRoute
+}
+
+const ClinicRouteChildren: ClinicRouteChildren = {
+  ClinicAppointmentsRoute: ClinicAppointmentsRouteWithChildren,
+  ClinicBookRoute: ClinicBookRoute,
+  ClinicDoctorsRoute: ClinicDoctorsRouteWithChildren,
+  ClinicVaccinationsRoute: ClinicVaccinationsRoute,
+  ClinicIndexRoute: ClinicIndexRoute,
+}
+
+const ClinicRouteWithChildren =
+  ClinicRoute._addFileChildren(ClinicRouteChildren)
 
 interface ShopRouteChildren {
   ShopIndexRoute: typeof ShopIndexRoute
@@ -399,6 +630,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  ClinicRoute: ClinicRouteWithChildren,
   ContactRoute: ContactRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
